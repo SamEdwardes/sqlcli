@@ -10,13 +10,14 @@ readme = "README.md"
 python = "^3.9"
 sqlmodel = "^0.0.6"
 rich = "^11.0.0"
-typer = {extras = ["all"], version = "^0.4.0"}
+typer = "^0.3.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
 black = "^21.12b0"
 mkdocs-material = "^8.1.7"
 mkdocs-include-markdown-plugin = "^3.2.3"
+typer-cli = "^0.0.12"
 
 [tool.poetry.scripts]
 sqlcli = "sqlcli.main:app"

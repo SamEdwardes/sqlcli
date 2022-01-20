@@ -13,7 +13,7 @@ from ._utils import get_db_url, get_tables, get_models
 from ._console import console
 
 
-app = typer.Typer()
+app = typer.Typer(help="A command line interface (CLI) for interacting with SQLModel.")
 
 # Shared help strings.
 database_url_help = """

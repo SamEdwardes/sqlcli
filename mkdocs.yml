@@ -43,3 +43,7 @@ nav:
   - Home: 'index.md'
   - changelog.md
   - contributing.md
+  - api-reference.md
+  - Tutorial - User Guide:
+    - tutorial/getting-started.md
+
