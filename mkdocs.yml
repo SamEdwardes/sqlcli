@@ -1,0 +1,45 @@
+site_name: sqlcli
+site_description: "A command line interface (CLI) for interacting with SQLModel."
+repo_url: https://github.com/samedwardes/sqlcli
+repo_name: 'samedwardes/sqlcli'
+edit_uri: ''
+
+theme:
+  name: material
+  icon:
+    logo: fontawesome/solid/terminal
+  favicon: fontawesome/solid/terminal
+  features:
+    - search.suggest
+    - search.highlight
+    - content.code.annotate
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.tasklist:
+      custom_checkbox: true
+      clickable_checkbox: true
+
+plugins:
+  - search
+  - include-markdown
+
+extra:
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/samedwardes/sqlcli
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/therealsamlam
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/samedwardes
+
+nav:
+  - Home: 'index.md'
+  - changelog.md
+  - contributing.md
