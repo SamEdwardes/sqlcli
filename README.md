@@ -2,10 +2,36 @@
 
 A command line interface (CLI) for interacting with SQLModel.
 
-## Testing with pipx
+<hr>
+
+**Source code:** [https://github.com/SamEdwardes/sqlcli](https://github.com/SamEdwardes/sqlcli)
+
+**Docs:** [https://samedwardes.github.io/sqlcli/](https://samedwardes.github.io/sqlcli/)
+
+**PyPi:** *not yet published*
+
+<hr>
+
+## Installation
+
+You can install *sqlcli* using pip:
 
 ```bash
-pipx uninstall sqlcli
-poetry build
-pipx install dist/sqlcli-0.1.0-py3-none-any.whl
+pip install sqlcli
+```
+
+This will make the `sqlcli` command available in your python environment.
+
+## Usage
+
+The quickest way to get started with *sqlcli* is to create a demo sqlite database:
+
+```bash
+sqlcli init-demo
+```
+
+This will create a small sqlite database on your computer. The you can use sqlcli to explore your database.
+
+```bash
+sqlcli select user --database-url "sqlite:///demo_database.db" --models-module "demo_models.py"
 ```
