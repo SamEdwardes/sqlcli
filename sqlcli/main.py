@@ -1,4 +1,4 @@
-import importlib
+
 import os
 from textwrap import dedent
 from typing import Any, Dict, Optional
@@ -7,15 +7,13 @@ import sqlmodel
 import typer
 from rich import inspect
 from rich.prompt import IntPrompt, Prompt, Confirm
-from sqlmodel import Session, SQLModel, create_engine, select
+from sqlmodel import Session, SQLModel, create_engine, select, Field
 
-from ._demo_models import Book, User
-from ._utils import get_db_url, get_tables
+from ._utils import get_db_url, get_tables, get_models
 from ._console import console
 
 
 app = typer.Typer()
-models = importlib.import_module(f'.{os.getenv("MODELS_MODULE")}')
 
 # Shared help strings.
 database_url_help = """
@@ -31,6 +29,7 @@ def init_demo(path: str = typer.Option(".", help="The path to save the demo data
     Create a demo sqlite database to test with sqlcli.
     """
     console.print("[blue]Creating a sqlite database[/]...")
+    from ._demo_models import User, Book
     
     # Create a sqlite database.
     sqlite_file_name = "demo_database.db"
@@ -67,7 +66,10 @@ def init_demo(path: str = typer.Option(".", help="The path to save the demo data
     console.print("[bold blue]user")
     for b in books:
         console.print(b)
-
+        
+    console.print("To work with the demo database please copy and paste the two required environment variables into the terminal")
+    console.print('export DATABASE_URL="sqlite:///demo_database.db"')
+    console.print('export MODELS_MODULE="tests/models.py"')
 
 @app.command('select')
 def select_sqlcli(
@@ -81,6 +83,7 @@ def select_sqlcli(
     Query the database to see the data inside a given table. Calling `sqlcli
     select` is similar to calling `SELECT * FROM [table]`.
     """
+    models = get_models()
     url = get_db_url(database_url)
     engine = create_engine(url)
     tables = get_tables(models)
@@ -107,6 +110,7 @@ def insert(
     database_url: Optional[str] = typer.Option(None, help=database_url_help), 
 ):
     """Insert a new record into the database."""
+    models = get_models()
     url = get_db_url(database_url)
     engine = create_engine(url)
     tables = get_tables(models)
@@ -145,6 +149,7 @@ def drop_all(database_url: Optional[str] = typer.Option(None, help=database_url_
     text = dedent("[bold red]Are you sure you want to drop the database? This cannot be undone.")
     if Confirm.ask(text):
         console.print("Dropping the database...")
+        models = get_models()
         database_url = get_db_url(database_url)
         engine = create_engine(database_url)
         console.print(":white_check_mark:​ Complete!")
@@ -156,6 +161,7 @@ def drop_all(database_url: Optional[str] = typer.Option(None, help=database_url_
 def create_all(database_url: Optional[str] = typer.Option(None, help=database_url_help)):
     """Create a database."""
     console.print("Creating the database...")
+    models = get_models()
     database_url = get_db_url(database_url)
     engine = create_engine(database_url)
     SQLModel.metadata.create_all(engine)

@@ -1,8 +1,10 @@
+import importlib
 import os
 from textwrap import dedent
-from typing import Optional, Dict
+from typing import Dict, Optional
 
 from sqlmodel import SQLModel
+
 from ._console import console
 
 
@@ -25,3 +27,21 @@ def get_tables(models_module) -> Dict[str, SQLModel]:
         if isinstance(obj, type(SQLModel)) and name != "SQLModel":
             tables[name.lower()] = obj
     return tables
+
+
+def get_models(module_path: Optional[str] = None):
+    # Load the models provided by the user.
+    if not module_path:
+        module_path = os.getenv("MODELS_MODULE")
+        if not module_path:
+            raise NameError("No modules_path specific")
+        
+    module_path = os.path.normpath(module_path)
+    path, filename = os.path.split(module_path)
+    module_name, ext = os.path.split(filename)
+
+    spec = importlib.util.spec_from_file_location(module_name, module_path)
+    models = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(models)
+        
+    return models
