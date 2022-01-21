@@ -3,11 +3,16 @@ import os
 from textwrap import dedent
 from typing import Any, Dict, Optional
 
+from rich.syntax import Syntax
+import pkgutil
+
 import sqlmodel
 import typer
 from rich import inspect
 from rich.prompt import IntPrompt, Prompt, Confirm
 from rich.table import Table
+from rich.panel import Panel
+from rich.markdown import Markdown
 from sqlmodel import Session, SQLModel, create_engine, select, col
 
 from ._utils import get_db_url, get_tables, get_models, create_rich_table
@@ -28,16 +33,25 @@ A database connection string. If no connection string is provided sqlcli will
 check for a connection string in the environment variable `DATABASE_URL`.
 """.strip().replace("\n", "")
 
-@app.command()
-
 
 @app.command()
-def init_demo(path: str = typer.Option(".", help="The path to save the demo database")):
+def init_demo(
+    path: str = typer.Option(".", help="The path to save the demo database"),
+    instructions: bool = typer.Option(False, help="Print the instructions on how to use the demo database.")
+):
     """Create a demo database for exploring sqlcli.
     
     Create a demo sqlite database to test with sqlcli.
     """
-    from ._demo_models import User, Book
+    if instructions:
+        data = pkgutil.get_data(__name__, "_demo/demo-instructions.md")
+        console.print(Markdown(data.decode("utf-8")))
+        console.print("[info]See the docs for more details:")
+        console.print("https://samedwardes.github.io/sqlcli/")
+        raise typer.Exit()
+    
+    from ._demo.models import Sport, Athlete
+    from ._demo.data import create_demo_data
     
     # Create a sqlite database.
     sqlite_file_name = "demo_database.db"
@@ -49,49 +63,30 @@ def init_demo(path: str = typer.Option(".", help="The path to save the demo data
     
     # Insert fake data into the sqlite database.
     with Session(engine) as session:
-        users = [
-            User(email="sam@sqlcli.com", password="passw0rd"),
-            User(email="jake@sqlcli.com", password="12345"),
-            User(email="olivia@sqlcli.com", password="secret"),
-            User(email="olivia@sqlcli.com", password="secret"),
-            User(email="olivia@sqlcli.com", password="secret"),
-            User(email="olivia@sqlcli.com", password="secret"),
-            User(email="olivia@sqlcli.com", password="secret"),
-            User(email="olivia@sqlcli.com", password="secret"),
-            User(email="olivia@sqlcli.com", password="secret"),
-            User(email="olivia@sqlcli.com", password="secret"),
-        ]
-        books = [
-            Book(isbn="1234-5678", title="Harry Potter", author="JK Rowling"),
-            Book(isbn="1112-5554", title="Harry Potter 2", author="JK Rowling"),
-            Book(isbn="1112-5554", title="Harry Potter 2", author="JK Rowling"),
-            Book(isbn="1112-5554", title="Harry Potter 2", author="JK Rowling"),
-            Book(isbn="1112-5554", title="Harry Potter 2", author="JK Rowling"),
-            Book(isbn="1112-5554", title="Harry Potter 2", author="JK Rowling"),
-            Book(isbn="1112-5554", title="Harry Potter 2", author="JK Rowling"),
-            Book(isbn="1112-5554", title="Harry Potter 2", author="JK Rowling"),
-            Book(isbn="1112-5554", title="Harry Potter 2", author="JK Rowling"),
-        ]
-        session.add_all(users)
-        session.add_all(books)
+        data = create_demo_data()
+        session.add_all(data)
         session.commit()
     console.print(f"Database created at {db_path}", style="info")
         
     
     with Session(engine) as engine:
-        users = session.exec(select(User)).all()
-        books = session.exec(select(Book)).all()
+        sports = session.exec(select(Sport)).all()
+        athletes = session.exec(select(Athlete)).all()
         
-    console.rule("user")
-    for u in users:
-        console.print(u)
-    console.rule("book")
-    for b in books:
-        console.print(b)
-        
-    console.print("To work with the demo database please copy and paste the two required environment variables into the terminal:", style="info")
-    console.print('export DATABASE_URL="sqlite:///demo_database.db"', style="italic")
-    console.print('export MODELS_MODULE="tests/models.py"', style="italic")
+    console.rule("sport")
+    console.print(create_rich_table(sports))
+    
+    console.rule("athlete")
+    console.print(create_rich_table(athletes))
+    
+    text = dedent("""
+    [info]For instructions on how to use the demo database visit https://samedwardes.github.io/sqlcli/ or run the command:
+    [italic]`sqlcli init-demo --instructions`
+    """).strip()
+    
+    console.print(text)
+    
+    
 
 @app.command('select')
 def select_sqlcli(
@@ -127,8 +122,7 @@ def select_sqlcli(
         for row in data:
             console.print(row.dict())
     elif format == "table":
-        rich_table = create_rich_table(data)
-        console.print(rich_table)
+        console.print(create_rich_table(data))
     else:
         for row in data:
             console.print(row)

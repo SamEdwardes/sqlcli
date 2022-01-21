@@ -7,7 +7,7 @@ The docs are hosted on GitHub pages at: [https://samedwardes.github.io/sqlcli/](
 - [ ] Rebuild the API reference.
 
 ```bash
-typer sqlcli.main utils docs --name sqlcli --output docs/api-docs.md
+typer sqlcli.main utils docs --output docs/api/_typer-cli-auto-docs.md
 ```
 
 - [ ] Check how the docs look locally.

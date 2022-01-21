@@ -1,13 +1,9 @@
 import importlib
 import os
-from textwrap import dedent
-from typing import Dict, Optional, List
+from typing import Dict, List, Optional
 
 from rich.table import Table
-
 from sqlmodel import SQLModel
-
-from ._console import console
 
 
 def get_db_url(database_url: Optional[str] = None):

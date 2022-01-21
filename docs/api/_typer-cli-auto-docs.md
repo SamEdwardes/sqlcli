@@ -1,11 +1,11 @@
-# `sqlcli`
+# CLI
 
 A command line interface (CLI) for interacting with SQLModel.
 
 **Usage**:
 
 ```console
-$ sqlcli [OPTIONS] COMMAND [ARGS]...
+$ [OPTIONS] COMMAND [ARGS]...
 ```
 
 **Options**:
@@ -22,14 +22,14 @@ $ sqlcli [OPTIONS] COMMAND [ARGS]...
 * `insert`: Insert a new record into the database.
 * `select`: Query the database.
 
-## `sqlcli create-all`
+## `create-all`
 
 Create a database.
 
 **Usage**:
 
 ```console
-$ sqlcli create-all [OPTIONS]
+$ create-all [OPTIONS]
 ```
 
 **Options**:
@@ -37,14 +37,14 @@ $ sqlcli create-all [OPTIONS]
 * `--database-url TEXT`: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable `DATABASE_URL`.
 * `--help`: Show this message and exit.
 
-## `sqlcli drop-all`
+## `drop-all`
 
 Drop a database.
 
 **Usage**:
 
 ```console
-$ sqlcli drop-all [OPTIONS]
+$ drop-all [OPTIONS]
 ```
 
 **Options**:
@@ -52,7 +52,7 @@ $ sqlcli drop-all [OPTIONS]
 * `--database-url TEXT`: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable `DATABASE_URL`.
 * `--help`: Show this message and exit.
 
-## `sqlcli init-demo`
+## `init-demo`
 
 Create a demo database for exploring sqlcli.
 
@@ -61,22 +61,23 @@ Create a demo sqlite database to test with sqlcli.
 **Usage**:
 
 ```console
-$ sqlcli init-demo [OPTIONS]
+$ init-demo [OPTIONS]
 ```
 
 **Options**:
 
 * `--path TEXT`: The path to save the demo database  [default: .]
+* `--instructions / --no-instructions`: Print the instructions on how to use the demo database.  [default: False]
 * `--help`: Show this message and exit.
 
-## `sqlcli insert`
+## `insert`
 
 Insert a new record into the database.
 
 **Usage**:
 
 ```console
-$ sqlcli insert [OPTIONS] [TABLE]
+$ insert [OPTIONS] [TABLE]
 ```
 
 **Arguments**:
@@ -88,7 +89,7 @@ $ sqlcli insert [OPTIONS] [TABLE]
 * `--database-url TEXT`: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable `DATABASE_URL`.
 * `--help`: Show this message and exit.
 
-## `sqlcli select`
+## `select`
 
 Query the database.
 
@@ -98,7 +99,7 @@ select` is similar to calling `SELECT * FROM [table]`.
 **Usage**:
 
 ```console
-$ sqlcli select [OPTIONS] [TABLE]
+$ select [OPTIONS] [TABLE]
 ```
 
 **Arguments**:
@@ -108,6 +109,6 @@ $ sqlcli select [OPTIONS] [TABLE]
 **Options**:
 
 * `--n INTEGER`: The number of database rows to query.  [default: 10]
-* `--output TEXT`: The format to output the data. Should be one of [None, 'json']
+* `--format TEXT`: The format to output the data. Should be one of [None, 'json', 'dict', 'table']  [default: table]
 * `--database-url TEXT`: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable `DATABASE_URL`.
 * `--help`: Show this message and exit.
