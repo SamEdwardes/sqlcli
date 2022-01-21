@@ -2,7 +2,7 @@ import os
 
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 
-from sports_models import Athlete, Sport
+from .models.sports import Athlete, Sport
 
 # Create a sqlite database.
 path = "."

@@ -1,7 +1,9 @@
 import importlib
 import os
 from textwrap import dedent
-from typing import Dict, Optional
+from typing import Dict, Optional, List
+
+from rich.table import Table
 
 from sqlmodel import SQLModel
 
@@ -45,3 +47,12 @@ def get_models(module_path: Optional[str] = None):
     spec.loader.exec_module(models)
         
     return models
+
+
+def create_rich_table(data: List[SQLModel]) -> Table:
+    table = Table()
+    for col_name in data[0].dict().keys():
+        table.add_column(col_name)
+    for row in data:
+        table.add_row(*[str(i) for i in row.dict().values()])
+    return table

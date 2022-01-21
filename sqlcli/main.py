@@ -7,11 +7,18 @@ import sqlmodel
 import typer
 from rich import inspect
 from rich.prompt import IntPrompt, Prompt, Confirm
-from sqlmodel import Session, SQLModel, create_engine, select, Field
+from rich.table import Table
+from sqlmodel import Session, SQLModel, create_engine, select, col
 
-from ._utils import get_db_url, get_tables, get_models
+from ._utils import get_db_url, get_tables, get_models, create_rich_table
 from ._console import console
 
+# SQLModel has known issue with an error message. Since this is a CLI application
+# this error message is really annoying. For now the error will be filtered out.
+# Note to self to monitor the GitHub issue for a resolution.
+# https://github.com/tiangolo/sqlmodel/issues/189
+import warnings
+warnings.filterwarnings("ignore", ".*Class SelectOfScalar will not make use of SQL compilation caching.*")
 
 app = typer.Typer(help="A command line interface (CLI) for interacting with SQLModel.")
 
@@ -21,6 +28,8 @@ A database connection string. If no connection string is provided sqlcli will
 check for a connection string in the environment variable `DATABASE_URL`.
 """.strip().replace("\n", "")
 
+@app.command()
+
 
 @app.command()
 def init_demo(path: str = typer.Option(".", help="The path to save the demo database")):
@@ -28,7 +37,6 @@ def init_demo(path: str = typer.Option(".", help="The path to save the demo data
     
     Create a demo sqlite database to test with sqlcli.
     """
-    console.print("[blue]Creating a sqlite database[/]...")
     from ._demo_models import User, Book
     
     # Create a sqlite database.
@@ -45,37 +53,51 @@ def init_demo(path: str = typer.Option(".", help="The path to save the demo data
             User(email="sam@sqlcli.com", password="passw0rd"),
             User(email="jake@sqlcli.com", password="12345"),
             User(email="olivia@sqlcli.com", password="secret"),
+            User(email="olivia@sqlcli.com", password="secret"),
+            User(email="olivia@sqlcli.com", password="secret"),
+            User(email="olivia@sqlcli.com", password="secret"),
+            User(email="olivia@sqlcli.com", password="secret"),
+            User(email="olivia@sqlcli.com", password="secret"),
+            User(email="olivia@sqlcli.com", password="secret"),
+            User(email="olivia@sqlcli.com", password="secret"),
         ]
         books = [
             Book(isbn="1234-5678", title="Harry Potter", author="JK Rowling"),
+            Book(isbn="1112-5554", title="Harry Potter 2", author="JK Rowling"),
+            Book(isbn="1112-5554", title="Harry Potter 2", author="JK Rowling"),
+            Book(isbn="1112-5554", title="Harry Potter 2", author="JK Rowling"),
+            Book(isbn="1112-5554", title="Harry Potter 2", author="JK Rowling"),
+            Book(isbn="1112-5554", title="Harry Potter 2", author="JK Rowling"),
+            Book(isbn="1112-5554", title="Harry Potter 2", author="JK Rowling"),
+            Book(isbn="1112-5554", title="Harry Potter 2", author="JK Rowling"),
             Book(isbn="1112-5554", title="Harry Potter 2", author="JK Rowling"),
         ]
         session.add_all(users)
         session.add_all(books)
         session.commit()
+    console.print(f"Database created at {db_path}", style="info")
         
-    console.print(f"Datbase created at [yellow]{db_path}")
     
     with Session(engine) as engine:
         users = session.exec(select(User)).all()
         books = session.exec(select(Book)).all()
         
-    console.print("[bold blue]user")
+    console.rule("user")
     for u in users:
         console.print(u)
-    console.print("[bold blue]user")
+    console.rule("book")
     for b in books:
         console.print(b)
         
-    console.print("To work with the demo database please copy and paste the two required environment variables into the terminal")
-    console.print('export DATABASE_URL="sqlite:///demo_database.db"')
-    console.print('export MODELS_MODULE="tests/models.py"')
+    console.print("To work with the demo database please copy and paste the two required environment variables into the terminal:", style="info")
+    console.print('export DATABASE_URL="sqlite:///demo_database.db"', style="italic")
+    console.print('export MODELS_MODULE="tests/models.py"', style="italic")
 
 @app.command('select')
 def select_sqlcli(
     table: Optional[str] = typer.Argument(None, help="The name of the table to query."), 
     n: int = typer.Option(10, help="The number of database rows to query."),
-    output: str = typer.Option(None, help="The format to output the data. Should be one of [None, 'json']"),
+    format: str = typer.Option('table', help="The format to output the data. Should be one of [None, 'json', 'dict', 'table']"),
     database_url: Optional[str] = typer.Option(None, help=database_url_help)
 ):
     """Query the database.
@@ -96,12 +118,20 @@ def select_sqlcli(
     with Session(engine) as session:
         data = session.exec(select(obj).limit(n)).all()
     
-    console.print(f"[bold blue]{table}")
-    for row in data:
-        if output == "json":
-            row = row.json()
-        # TODO: add a rich table option
-        console.print(row)
+    console.rule(f"{table}")
+    
+    if format == "json":
+        for row in data:
+            console.print(row.json()) 
+    elif format == "dict":
+        for row in data:
+            console.print(row.dict())
+    elif format == "table":
+        rich_table = create_rich_table(data)
+        console.print(rich_table)
+    else:
+        for row in data:
+            console.print(row)
 
 
 @app.command()
@@ -121,7 +151,7 @@ def insert(
     obj = tables[table]
     
     # Get input from the user:
-    console.print(f"[bold blue]Enter data for new {table}...")
+    console.print(f"[cyan]Enter data for new {table}...")
     data = {}
     for name, field in obj.__fields__.items():
         txt = f"[blue]{name}[/] ({field.type_})"
