@@ -39,10 +39,9 @@ def version_callback(value: bool):
 
 @app.callback()
 def main(
-    version: bool = typer.Option(None, "--version", callback=version_callback, is_eager=True),
+    version: bool = typer.Option(False, "--version", callback=version_callback, is_eager=True, help="Show the installed version."),
 ):
-    # Do other global stuff, handle other global options here
-    return
+    return None
 
 # Shared help strings.
 
@@ -274,3 +273,11 @@ def inspect_sqlcli(
         
     obj = tables[table_name]
     inspect(obj)
+
+
+@app.command()
+def docs():
+    """Open the docs: https://samedwardes.github.io/sqlcli/"""
+    url = "https://samedwardes.github.io/sqlcli/"
+    console.print(f"[info]Opening the docs: {url}")
+    typer.launch(url)
