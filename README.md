@@ -8,7 +8,7 @@ A command line interface (CLI) for interacting with SQLModel.
 
 **Docs:** [https://samedwardes.github.io/sqlcli/](https://samedwardes.github.io/sqlcli/)
 
-**PyPi:** *not yet published*
+**PyPi:** [https://pypi.org/project/sqlcli/](https://pypi.org/project/sqlcli/)
 
 <hr>
 

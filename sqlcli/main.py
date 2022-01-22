@@ -6,6 +6,7 @@ from typing import Any, Dict, Optional
 from rich.syntax import Syntax
 import pkgutil
 from sqlalchemy import sql
+from . import __version__
 
 import sqlmodel
 import typer
@@ -26,7 +27,22 @@ from ._console import console
 import warnings
 warnings.filterwarnings("ignore", ".*Class SelectOfScalar will not make use of SQL compilation caching.*")
 
+
 app = typer.Typer(help="A command line interface (CLI) for interacting with SQLModel.")
+
+
+def version_callback(value: bool):
+    if value:
+        console.print(f"{__version__}")
+        raise typer.Exit()
+
+
+@app.callback()
+def main(
+    version: bool = typer.Option(None, "--version", callback=version_callback, is_eager=True),
+):
+    # Do other global stuff, handle other global options here
+    return
 
 # Shared help strings.
 
@@ -46,9 +62,11 @@ The name of the table to query.
 """.strip().replace("\n", "")
 
 
-@app.command()
-def init():
-    return None
+# def version_callback(value: bool):
+#     if value:
+#         typer.echo(f"Awesome CLI Version: {__version__}")
+#         raise typer.Exit()
+    
 
 
 @app.command()
