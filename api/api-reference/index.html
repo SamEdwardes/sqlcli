@@ -298,6 +298,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#init" class="md-nav__link">
+    init
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#init-demo" class="md-nav__link">
     init-demo
   </a>
@@ -307,6 +314,13 @@
         <li class="md-nav__item">
   <a href="#insert" class="md-nav__link">
     insert
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspect" class="md-nav__link">
+    inspect
   </a>
   
 </li>
@@ -375,7 +389,7 @@
   
     <li class="md-nav__item">
       <a href="../../tutorial/using-demo-db/" class="md-nav__link">
-        Using demo db
+        Using the demo database
       </a>
     </li>
   
@@ -429,6 +443,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#init" class="md-nav__link">
+    init
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#init-demo" class="md-nav__link">
     init-demo
   </a>
@@ -438,6 +459,13 @@
         <li class="md-nav__item">
   <a href="#insert" class="md-nav__link">
     insert
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspect" class="md-nav__link">
+    inspect
   </a>
   
 </li>
@@ -479,54 +507,85 @@
 <ul>
 <li><code>create-all</code>: Create a database.</li>
 <li><code>drop-all</code>: Drop a database.</li>
+<li><code>init</code></li>
 <li><code>init-demo</code>: Create a demo database for exploring sqlcli.</li>
 <li><code>insert</code>: Insert a new record into the database.</li>
+<li><code>inspect</code>: Inspect a SQLModel with rich.inspect.</li>
 <li><code>select</code>: Query the database.</li>
 </ul>
 <h2 id="create-all"><code>create-all</code></h2>
-<p>Create a database.</p>
+<p>Create a database. The equivalent to calling
+<code>SQLModel.metadata.create_all(engine)</code>.</p>
 <p><strong>Usage</strong>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="gp">$ </span>create-all <span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <p><strong>Options</strong>:</p>
 <ul>
-<li><code>--database-url TEXT</code>: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable <code>DATABASE_URL</code>.</li>
+<li><code>-d, --database-url TEXT</code>: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable <code>DATABASE_URL</code>.</li>
+<li><code>-m, --models-path TEXT</code>: The location of the python script(s) that contain the SQLModels. If no argumentis provided sqlcli will check for a path in the environment variable<code>MODELS_PATH</code>.</li>
 <li><code>--help</code>: Show this message and exit.</li>
 </ul>
 <h2 id="drop-all"><code>drop-all</code></h2>
-<p>Drop a database.</p>
+<p>Drop a database. The equivalent to calling
+<code>SQLModel.metadata.drop_all(engine)</code>.</p>
 <p><strong>Usage</strong>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="gp">$ </span>drop-all <span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <p><strong>Options</strong>:</p>
 <ul>
-<li><code>--database-url TEXT</code>: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable <code>DATABASE_URL</code>.</li>
+<li><code>-d, --database-url TEXT</code>: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable <code>DATABASE_URL</code>.</li>
+<li><code>-m, --models-path TEXT</code>: The location of the python script(s) that contain the SQLModels. If no argumentis provided sqlcli will check for a path in the environment variable<code>MODELS_PATH</code>.</li>
+<li><code>-y</code>: Danger! Skip the prompt and drop the database. This cannot be undone.  [default: False]</li>
+<li><code>--help</code>: Show this message and exit.</li>
+</ul>
+<h2 id="init"><code>init</code></h2>
+<p><strong>Usage</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="gp">$ </span>init <span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<p><strong>Options</strong>:</p>
+<ul>
 <li><code>--help</code>: Show this message and exit.</li>
 </ul>
 <h2 id="init-demo"><code>init-demo</code></h2>
 <p>Create a demo database for exploring sqlcli.</p>
 <p>Create a demo sqlite database to test with sqlcli.</p>
 <p><strong>Usage</strong>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="gp">$ </span>init-demo <span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="gp">$ </span>init-demo <span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <p><strong>Options</strong>:</p>
 <ul>
 <li><code>--path TEXT</code>: The path to save the demo database  [default: .]</li>
-<li><code>--instructions / --no-instructions</code>: Print the instructions on how to use the demo database.  [default: False]</li>
+<li><code>--clear / --no-clear</code>: Remove all of the demo database related data including <code>demo_models.py</code> and <code>demo_database.db</code>.  [default: False]</li>
 <li><code>--help</code>: Show this message and exit.</li>
 </ul>
 <h2 id="insert"><code>insert</code></h2>
 <p>Insert a new record into the database.</p>
 <p><strong>Usage</strong>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="gp">$ </span>insert <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>TABLE<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="gp">$ </span>insert <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>TABLE_NAME<span class="o">]</span>
 </code></pre></div>
 <p><strong>Arguments</strong>:</p>
 <ul>
-<li><code>[TABLE]</code></li>
+<li><code>[TABLE_NAME]</code>: The name of the table to query.</li>
 </ul>
 <p><strong>Options</strong>:</p>
 <ul>
-<li><code>--database-url TEXT</code>: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable <code>DATABASE_URL</code>.</li>
+<li><code>-d, --database-url TEXT</code>: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable <code>DATABASE_URL</code>.</li>
+<li><code>-m, --models-path TEXT</code>: The location of the python script(s) that contain the SQLModels. If no argumentis provided sqlcli will check for a path in the environment variable<code>MODELS_PATH</code>.</li>
+<li><code>--help</code>: Show this message and exit.</li>
+</ul>
+<h2 id="inspect"><code>inspect</code></h2>
+<p>Inspect a SQLModel with rich.inspect.</p>
+<p><strong>Usage</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="gp">$ </span>inspect <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>TABLE_NAME<span class="o">]</span>
+</code></pre></div>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>[TABLE_NAME]</code>: The name of the table to query.</li>
+</ul>
+<p><strong>Options</strong>:</p>
+<ul>
+<li><code>-d, --database-url TEXT</code>: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable <code>DATABASE_URL</code>.</li>
+<li><code>-m, --models-path TEXT</code>: The location of the python script(s) that contain the SQLModels. If no argumentis provided sqlcli will check for a path in the environment variable<code>MODELS_PATH</code>.</li>
 <li><code>--help</code>: Show this message and exit.</li>
 </ul>
 <h2 id="select"><code>select</code></h2>
@@ -534,17 +593,19 @@
 <p>Query the database to see the data inside a given table. Calling <code>sqlcli
 select</code> is similar to calling <code>SELECT * FROM [table]</code>.</p>
 <p><strong>Usage</strong>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="gp">$ </span><span class="k">select</span> <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>TABLE<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="gp">$ </span><span class="k">select</span> <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>TABLE_NAME<span class="o">]</span>
 </code></pre></div>
 <p><strong>Arguments</strong>:</p>
 <ul>
-<li><code>[TABLE]</code>: The name of the table to query.</li>
+<li><code>[TABLE_NAME]</code>: The name of the table to query.</li>
 </ul>
 <p><strong>Options</strong>:</p>
 <ul>
-<li><code>--n INTEGER</code>: The number of database rows to query.  [default: 10]</li>
-<li><code>--format TEXT</code>: The format to output the data. Should be one of [None, 'json', 'dict', 'table']  [default: table]</li>
-<li><code>--database-url TEXT</code>: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable <code>DATABASE_URL</code>.</li>
+<li><code>-n, --number-rows INTEGER</code>: The number of database rows to query.  [default: 10]</li>
+<li><code>-f, --format TEXT</code>: The format to output the data. Should be one of [None, 'json', 'dict', 'table']  [default: table]</li>
+<li><code>-d, --database-url TEXT</code>: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable <code>DATABASE_URL</code>.</li>
+<li><code>-m, --models-path TEXT</code>: The location of the python script(s) that contain the SQLModels. If no argumentis provided sqlcli will check for a path in the environment variable<code>MODELS_PATH</code>.</li>
+<li><code>-v, --verbose</code>: Show a more verbose output.  [default: False]</li>
 <li><code>--help</code>: Show this message and exit.</li>
 </ul>
 <!-- END INCLUDE -->
