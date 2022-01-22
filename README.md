@@ -33,5 +33,5 @@ sqlcli init-demo
 This will create a small sqlite database on your computer. The you can use sqlcli to explore your database.
 
 ```bash
-sqlcli select user --database-url "sqlite:///demo_database.db" --models-module "demo_models.py"
+sqlcli select athlete --database-url "sqlite:///demo_database.db" --models-module "demo_models.py"
 ```

@@ -43,7 +43,7 @@ Icons are from [fontawesome.com](https://fontawesome.com/).
 
 The logo is the [terminal icon](https://fontawesome.com/v5.15/icons/terminal?style=solid).
 
-![logo](img/terminal-solid.svg){width="100"}
+![logo](static/img/terminal-solid.svg){width="100"}
 
 
 
