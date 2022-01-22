@@ -5,7 +5,6 @@ description = "A command line interface (CLI) for interacting with SQLModel."
 authors = ["SamEdwardes <edwardes.s@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-include = ["sqlcli/_demo/instructions.md"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -19,6 +18,7 @@ black = "^21.12b0"
 mkdocs-material = "^8.1.7"
 mkdocs-include-markdown-plugin = "^3.2.3"
 typer-cli = "^0.0.12"
+mdx-include = "^1.4.1"
 
 [tool.poetry.scripts]
 sqlcli = "sqlcli.main:app"

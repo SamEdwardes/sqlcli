@@ -3,7 +3,7 @@ import os
 from typing import Dict, List, Optional
 
 from rich.table import Table
-from sqlmodel import SQLModel
+from sqlmodel import SQLModel, create_engine
 
 
 def get_db_url(database_url: Optional[str] = None):
@@ -27,22 +27,31 @@ def get_tables(models_module) -> Dict[str, SQLModel]:
     return tables
 
 
-def get_models(module_path: Optional[str] = None):
+def get_models(models_path: Optional[str] = None):
     # Load the models provided by the user.
-    if not module_path:
-        module_path = os.getenv("MODELS_MODULE")
-        if not module_path:
+    if not models_path:
+        models_path = os.getenv("MODELS_PATH")
+        if not models_path:
             raise NameError("No modules_path specific")
         
-    module_path = os.path.normpath(module_path)
-    path, filename = os.path.split(module_path)
+    models_path = os.path.normpath(models_path)
+    path, filename = os.path.split(models_path)
     module_name, ext = os.path.split(filename)
 
-    spec = importlib.util.spec_from_file_location(module_name, module_path)
+    spec = importlib.util.spec_from_file_location(module_name, models_path)
     models = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(models)
         
     return models
+
+
+def sqlmodel_setup(models_path: str, database_url: str):
+    """Quickstart for getting required objects"""
+    models = get_models(models_path)
+    url = get_db_url(database_url)
+    engine = create_engine(url)
+    tables = get_tables(models)
+    return models, url, engine, tables
 
 
 def create_rich_table(data: List[SQLModel]) -> Table:

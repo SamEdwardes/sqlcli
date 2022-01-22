@@ -15,6 +15,7 @@ theme:
     - content.code.annotate
 
 markdown_extensions:
+  - mdx_include
   - attr_list
   - md_in_html
   - admonition
@@ -27,6 +28,23 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
       clickable_checkbox: true
+
+# markdown_extensions:
+# - toc:
+#     permalink: true
+# - markdown.extensions.codehilite:
+#     guess_lang: false
+# - admonition
+# - codehilite
+# - extra
+# - pymdownx.superfences:
+#     custom_fences:
+#     - name: mermaid
+#       class: mermaid
+#       format: !!python/name:pymdownx.superfences.fence_code_format ''
+# - pymdownx.tabbed:
+#     alternate_style: true
+# - mdx_include
 
 plugins:
   - search

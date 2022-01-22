@@ -3,6 +3,7 @@ demo_database.db
 database.db
 settings.json
 tmp.py
+models.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

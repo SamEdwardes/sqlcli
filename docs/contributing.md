@@ -7,7 +7,7 @@ The docs are hosted on GitHub pages at: [https://samedwardes.github.io/sqlcli/](
 - [ ] Rebuild the API reference.
 
 ```bash
-typer sqlcli.main utils docs --output docs/api/_typer-cli-auto-docs.md
+python scripts/docs.py build-typer-docs
 ```
 
 - [ ] Check how the docs look locally.
@@ -19,7 +19,7 @@ mkdocs serve
 - [ ] Publish to GitHub pages.
 
 ```bash
-mkdocs gh-deploy --force 
+python scripts/docs.py publish-docs
 ```
 
 ## Credits
