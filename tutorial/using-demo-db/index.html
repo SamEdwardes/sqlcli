@@ -420,8 +420,8 @@ play with <em>sqlcli</em>!</p>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>sqlcli insert athlete -d <span class="s2">&quot;sqlite:///demo_database.db&quot;</span> -m <span class="s2">&quot;demo_models.py&quot;</span>
 </code></pre></div>
 <p>It can be annoying to specify the database URL and SQLModel modules everytime. To avoid this you can set two environment variables the <em>sqlcli</em> will default to:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>export DATABASE_URL=&quot;sqlite:///demo_database.db&quot;
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>export MODELS_PATH=&quot;tests/models/sports.py
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">export</span> <span class="nv">DATABASE_URL</span><span class="o">=</span><span class="s2">&quot;sqlite:///demo_database.db&quot;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">export</span> <span class="nv">MODELS_PATH</span><span class="o">=</span><span class="s2">&quot;tests/models/sports.py</span>
 </code></pre></div>
 <p>Now you can call the same commands but without specifying the <code>-d</code> and <code>-m</code> options:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sqlcli <span class="k">select</span> athlete
