@@ -2,11 +2,6 @@
 import json
 import os
 import pkgutil
-# SQLModel has known issue with an error message. Since this is a CLI application
-# this error message is really annoying. For now the error will be filtered out.
-# Note to self to monitor the GitHub issue for a resolution.
-# https://github.com/tiangolo/sqlmodel/issues/189
-import warnings
 from textwrap import dedent
 from typing import Any, Dict, Optional
 
@@ -31,6 +26,11 @@ from ._utils import (create_rich_table, get_db_url,
                      get_models, get_primary_key, get_tables, is_foreign_key,
                      sqlmodel_setup, validate_table_name)
 
+# SQLModel has known issue with an error message. Since this is a CLI application
+# this error message is really annoying. For now the error will be filtered out.
+# Note to self to monitor the GitHub issue for a resolution.
+# https://github.com/tiangolo/sqlmodel/issues/189
+import warnings
 warnings.filterwarnings("ignore", ".*Class SelectOfScalar will not make use of SQL compilation caching.*")
 
 
@@ -49,8 +49,9 @@ def main(
 ):
     return None
 
-# Shared help strings.
 
+
+# Shared help strings.
 database_url_help = """
 A database connection string. If no connection string is provided sqlcli will
 check for a connection string in the environment variable `DATABASE_URL`.
@@ -67,10 +68,9 @@ The name of the table to query.
 """.strip().replace("\n", "")
 
 
-# def version_callback(value: bool):
-#     if value:
-#         typer.echo(f"Awesome CLI Version: {__version__}")
-#         raise typer.Exit()
+@app.command()
+def hello_world():
+    console.print("hello world!")
     
 
 
@@ -137,7 +137,7 @@ def init_demo(
     
     console.print("[info]To avoid passing in the `-d` and -`m` option everytime you can set the following environment variables:\n")
     console.print('export DATABASE_URL="sqlite:///demo_database.db"')
-    console.print('export MODELS_PATH="tests/models/sports.py"\n')
+    console.print('export MODELS_PATH="demo_models.py"\n')
     
     docs_url = "https://samedwardes.github.io/sqlcli/tutorial/using-demo-db/"
     text = f"[info]For instructions on how to use the demo database visit {docs_url}."
