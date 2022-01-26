@@ -200,21 +200,45 @@ def insert(
         table_name = Prompt.ask("Please select a table", choices=tables.keys())
         
     obj = tables[table_name]
+    foreign_keys = [i for i in obj.__table__.foreign_keys]
     
     # Get input from the user:
     console.print(f"[cyan]Enter data for new {table_name}...")
     data = {}
-    for name, field in obj.__fields__.items():
-        txt = f"[blue]{name}[/] ({field.type_})"
-        if str(field.type_) == "<class 'int'>":
+    
+    
+    for field in obj.__fields__.values():
+        prompt_txt = f"[blue]{field.name}[/] ({field.type_})"
+        
+        # Figure out the right type of prompt to render.
+        if isinstance(1, field.type_):
             prompt = IntPrompt
         else:
             prompt = Prompt
+            
+        # Check if the column is a foreign key. If it is a foreign key identify
+        # the list of possible values.
+        prompt_choices = None
+        for fk in foreign_keys:
+            if fk.parent.name == field.name:
+                fk_ojb = tables[fk.column.table.name]
+                # Get a list of possible values
+                with Session(engine) as session:
+                    options_data = session.exec(select(fk_ojb)).all()
+                    console.print("Select one of...")
+                    console.print(options_data)
+                    pk_column = [i for i in fk_ojb.__table__._columns if i.primary_key][0]
+                    prompt_choices = [str(i.dict()[pk_column.name]) for i in options_data]
+                break
+        
+                    
+        # Determine if the field is optional or not.
         if field.allow_none:
-            i = prompt.ask(f"{txt} [bold cyan](optional)", default=field.default,)
+            i = prompt.ask(f"{prompt_txt} [bold cyan](optional)", default=field.default, choices=prompt_choices)
         else:
-            i = prompt.ask(txt)
-        data[name] = i
+            i = prompt.ask(prompt_txt, choices=prompt_choices)
+            
+        data[field.name] = i
     
     with Session(engine) as session:
         new_row = obj(**data)
