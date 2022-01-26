@@ -1,4 +1,5 @@
 
+import json
 import os
 import pkgutil
 # SQLModel has known issue with an error message. Since this is a CLI application
@@ -20,6 +21,8 @@ from rich.syntax import Syntax
 from rich.table import Table
 from sqlalchemy import sql
 from sqlmodel import Session, SQLModel, col, create_engine, select
+
+import sqlcli
 
 from . import __version__
 from ._console import console, error_console
@@ -157,23 +160,25 @@ def select_sqlcli(
     select` is similar to calling `SELECT * FROM [table]`.
     """   
     models, url, engine, tables = sqlmodel_setup(models_path, database_url)
-    
-    if not table_name:
-        table_name = Prompt.ask("Please select a table", choices=tables.keys())
-    
-    obj = validate_table_name(table_name, tables)
+    obj, table_name = validate_table_name(table_name, tables)
         
     with Session(engine) as session:
         data = session.exec(select(obj).limit(n)).all()
     
-    console.rule(f"table: `{table_name}`")
+    if verbose:
+        console.rule(f"table: `{table_name}`")
     
     if format == "json":
-        for row in data:
-            console.print(row.json()) 
+        # json_rows = [row.json() for row in data]
+        # json_data = {table_name: json_rows}
+        dict_rows = [row.dict() for row in data]
+        dict_data = {table_name: dict_rows}
+        json_data = json.dumps(dict_data, indent=4)
+        console.print(json_data) 
     elif format == "dict":
-        for row in data:
-            console.print(row.dict())
+        dict_rows = [row.dict() for row in data]
+        dict_data = {table_name: dict_rows}
+        console.print(dict_data) 
     elif format == "table":
         console.print(create_rich_table(data))
     else:
@@ -194,15 +199,11 @@ def select_sqlcli(
 def insert(
     table_name: Optional[str] = typer.Argument(None, help=table_name_help), 
     database_url: Optional[str] = typer.Option(None, "--database-url", "-d", help=database_url_help),
-    models_path: Optional[str] = typer.Option(None, "--models-path", "-m", help=models_path_help), 
+    models_path: Optional[str] = typer.Option(None, "--models-path", "-m", help=models_path_help),
 ):
     """Insert a new record into the database."""
-    models, url, engine, tables = sqlmodel_setup(models_path, database_url)
-    
-    if not table_name:
-        table_name = Prompt.ask("Please select a table", choices=tables.keys())
-        
-    obj = validate_table_name(table_name, tables)
+    models, url, engine, tables = sqlmodel_setup(models_path, database_url)        
+    obj, table_name = validate_table_name(table_name, tables)
     
     # Get input from the user:
     data = {}
@@ -226,8 +227,8 @@ def insert(
             foreign_key_col_name = get_foreign_key_column_name(obj, field.name)
             with Session(engine) as session:
                 options_data = session.exec(select(foreign_table)).all()
-                console.print("Select one of...")
-                console.print(create_rich_table(options_data))
+                console.print(f"The column `[green]{field.name}[/]` is a foreign key related to the `[blue]{foreign_table_name}[/]` table. Please select from one of the options below from the `[blue]{foreign_key_col_name}[/]` column:")
+                console.print(create_rich_table(options_data, title=foreign_table_name))
                 prompt_choices = [str(i.dict()[foreign_key_col_name]) for i in options_data]
         else:
             prompt_choices = None      
@@ -252,7 +253,6 @@ def insert(
             title="New row successfully added :party_popper:",
             border_style="green"
         ))
-        
     
 
 @app.command()
@@ -298,11 +298,7 @@ def inspect_sqlcli(
 ):
     """Inspect a SQLModel with rich.inspect."""
     models, url, engine, tables = sqlmodel_setup(models_path, database_url)
-    
-    if not table_name:
-        table_name = Prompt.ask("Please select a table", choices=tables.keys())
-        
-    obj = tables[table_name]
+    obj, table_name = validate_table_name(table_name, tables)
     inspect(obj)
 
 

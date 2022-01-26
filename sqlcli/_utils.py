@@ -1,9 +1,10 @@
 import importlib
 import os
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 import typer
 from rich import inspect
+from rich.prompt import Prompt
 from rich.table import Table
 from sqlalchemy import Column
 from sqlmodel import SQLModel, create_engine
@@ -96,8 +97,8 @@ def sqlmodel_setup(models_path: str, database_url: str):
     return models, url, engine, tables
 
 
-def create_rich_table(data: List[SQLModel]) -> Table:
-    table = Table()
+def create_rich_table(data: List[SQLModel], **kwargs) -> Table:
+    table = Table(**kwargs)
     for col_name in data[0].dict().keys():
         table.add_column(col_name)
     for row in data:
@@ -105,7 +106,10 @@ def create_rich_table(data: List[SQLModel]) -> Table:
     return table
 
 
-def validate_table_name(table_name: str, tables: List[SQLModel]) -> SQLModel:
+def validate_table_name(table_name: Optional[str], tables: List[SQLModel]) -> Tuple[SQLModel, str]:
+    if not table_name:
+        table_name = Prompt.ask("Please select a table", choices=tables.keys())
+    
     try:
         obj = tables[table_name]
     except KeyError:
@@ -113,4 +117,4 @@ def validate_table_name(table_name: str, tables: List[SQLModel]) -> SQLModel:
         error_console.print(f"{list(tables.keys())}")
         raise typer.Exit(code=1)
     
-    return obj
+    return obj, table_name
