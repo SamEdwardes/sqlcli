@@ -6,6 +6,8 @@ from rich.table import Table
 from rich import inspect
 from sqlmodel import SQLModel, create_engine
 from sqlalchemy import Column
+import typer
+from ._console import console, error_console
 
 from .exceptions import PrimaryKeyError
 
@@ -102,3 +104,14 @@ def create_rich_table(data: List[SQLModel]) -> Table:
     for row in data:
         table.add_row(*[str(i) for i in row.dict().values()])
     return table
+
+
+def validate_table_name(table_name: str, tables: List[SQLModel]) -> SQLModel:
+    try:
+        obj = tables[table_name]
+    except KeyError:
+        error_console.print(f"The provided table does not exist. Please select from one of:")
+        error_console.print(f"{list(tables.keys())}")
+        raise typer.Exit(code=1)
+    
+    return obj

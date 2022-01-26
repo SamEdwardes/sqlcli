@@ -8,3 +8,4 @@ custom_theme = Theme({
 })
 
 console = Console(theme=custom_theme)
+error_console = Console(stderr=True, style="bold red")

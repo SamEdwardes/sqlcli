@@ -22,9 +22,9 @@ from sqlalchemy import sql
 from sqlmodel import Session, SQLModel, col, create_engine, select
 
 from . import __version__
-from ._console import console
+from ._console import console, error_console
 from ._utils import (create_rich_table, get_db_url, get_foreign_key_table_name,
-                     get_models, get_primary_key, get_tables, sqlmodel_setup, is_foreign_key, get_foreign_key_column_name)
+                     get_models, get_primary_key, get_tables, sqlmodel_setup, is_foreign_key, get_foreign_key_column_name, validate_table_name)
 
 warnings.filterwarnings("ignore", ".*Class SelectOfScalar will not make use of SQL compilation caching.*")
 
@@ -158,8 +158,8 @@ def select_sqlcli(
     
     if not table_name:
         table_name = Prompt.ask("Please select a table", choices=tables.keys())
-        
-    obj = tables[table_name]
+    
+    obj = validate_table_name(table_name, tables)
         
     with Session(engine) as session:
         data = session.exec(select(obj).limit(n)).all()
@@ -200,8 +200,7 @@ def insert(
     if not table_name:
         table_name = Prompt.ask("Please select a table", choices=tables.keys())
         
-    obj = tables[table_name]
-    foreign_keys = [i for i in obj.__table__.foreign_keys]
+    obj = validate_table_name(table_name, tables)
     
     # Get input from the user:
     data = {}
