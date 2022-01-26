@@ -14,8 +14,8 @@ import typer
 from rich import inspect
 from rich.markdown import Markdown
 from rich.panel import Panel
-from rich.prompt import Confirm, FloatPrompt, IntPrompt, Prompt
 from rich.pretty import Pretty
+from rich.prompt import Confirm, FloatPrompt, IntPrompt, Prompt
 from rich.syntax import Syntax
 from rich.table import Table
 from sqlalchemy import sql
@@ -23,8 +23,10 @@ from sqlmodel import Session, SQLModel, col, create_engine, select
 
 from . import __version__
 from ._console import console, error_console
-from ._utils import (create_rich_table, get_db_url, get_foreign_key_table_name,
-                     get_models, get_primary_key, get_tables, sqlmodel_setup, is_foreign_key, get_foreign_key_column_name, validate_table_name)
+from ._utils import (create_rich_table, get_db_url,
+                     get_foreign_key_column_name, get_foreign_key_table_name,
+                     get_models, get_primary_key, get_tables, is_foreign_key,
+                     sqlmodel_setup, validate_table_name)
 
 warnings.filterwarnings("ignore", ".*Class SelectOfScalar will not make use of SQL compilation caching.*")
 

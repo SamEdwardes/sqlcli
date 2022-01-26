@@ -2,14 +2,13 @@ import importlib
 import os
 from typing import Dict, List, Optional
 
-from rich.table import Table
-from rich import inspect
-from sqlmodel import SQLModel, create_engine
-from sqlalchemy import Column
 import typer
-from ._console import console, error_console
+from rich import inspect
+from rich.table import Table
+from sqlalchemy import Column
+from sqlmodel import SQLModel, create_engine
 
-from .exceptions import PrimaryKeyError
+from ._console import console, error_console
 
 
 def get_db_url(database_url: Optional[str] = None):
