@@ -36,6 +36,10 @@
       
     
     
+      <link rel="stylesheet" href="static/css/termynal.css">
+    
+      <link rel="stylesheet" href="static/css/custom.css">
+    
     <script>__md_scope=new URL(".",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -361,6 +365,34 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorial/reading-data/" class="md-nav__link">
+        Reading data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorial/inserting-data/" class="md-nav__link">
+        Inserting data
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -427,7 +459,7 @@
 
 <p><strong>Source code:</strong> <a href="https://github.com/SamEdwardes/sqlcli">https://github.com/SamEdwardes/sqlcli</a></p>
 <p><strong>Docs:</strong> <a href="https://samedwardes.github.io/sqlcli/">https://samedwardes.github.io/sqlcli/</a></p>
-<p><strong>PyPi:</strong> <em>not yet published</em></p>
+<p><strong>PyPi:</strong> <a href="https://pypi.org/project/sqlcli/">https://pypi.org/project/sqlcli/</a></p>
 <hr>
 
 <h2 id="installation">Installation</h2>
@@ -440,7 +472,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sqlcli init-demo
 </code></pre></div>
 <p>This will create a small sqlite database on your computer. The you can use sqlcli to explore your database.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sqlcli <span class="k">select</span> user --database-url <span class="s2">&quot;sqlite:///demo_database.db&quot;</span> --models-module <span class="s2">&quot;demo_models.py&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sqlcli <span class="k">select</span> athlete --database-url <span class="s2">&quot;sqlite:///demo_database.db&quot;</span> --models-module <span class="s2">&quot;demo_models.py&quot;</span>
 </code></pre></div>
 <!-- END INCLUDE -->
 
@@ -528,6 +560,10 @@
     
     
       <script src="assets/javascripts/bundle.01de222e.min.js"></script>
+      
+        <script src="static/js/termynal.js"></script>
+      
+        <script src="static/js/custom.js"></script>
       
     
   </body>
