@@ -3,7 +3,11 @@ import os
 from typing import Dict, List, Optional
 
 from rich.table import Table
+from rich import inspect
 from sqlmodel import SQLModel, create_engine
+from sqlalchemy import Column
+
+from .exceptions import PrimaryKeyError
 
 
 def get_db_url(database_url: Optional[str] = None):
@@ -44,6 +48,43 @@ def get_models(models_path: Optional[str] = None):
         
     return models
 
+
+def get_primary_key(obj: SQLModel) -> Column:
+    """Find and return the primary key column from a SQLModel table."""
+    pk_columns = [i for i in obj.__table__._columns if i.primary_key]
+    if len(pk_columns)> 1:
+        msg = f"The table has more than 1 primary key. The table must have only 1 primary key."
+        raise PrimaryKeyError(msg)
+    elif len(pk_columns) == 0:
+        msg = f"The table has 0 primary keys. The table must have only 1 primary key."
+        raise PrimaryKeyError(msg)
+    
+    pk = pk_columns[0]
+    return pk
+
+
+def is_foreign_key(obj, field_name: str) -> bool:
+    foreign_keys = [i for i in obj.__table__.foreign_keys]
+    for fk in foreign_keys:
+        if fk.parent.name == field_name:
+            return True
+    return False
+
+
+def get_foreign_key_column_name(obj: SQLModel, field_name: str) -> str:
+    foreign_keys = [i for i in obj.__table__.foreign_keys]
+    for fk in foreign_keys:
+        if fk.parent.name == field_name:
+            return fk.column.name
+
+
+def get_foreign_key_table_name(obj: SQLModel, field_name: str) -> Optional[str]:
+    foreign_keys = [i for i in obj.__table__.foreign_keys]
+    for fk in foreign_keys:
+        if fk.parent.name == field_name:
+            return fk.column.table.name
+    return None
+        
 
 def sqlmodel_setup(models_path: str, database_url: str):
     """Quickstart for getting required objects"""

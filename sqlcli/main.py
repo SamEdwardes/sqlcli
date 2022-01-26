@@ -1,30 +1,31 @@
 
 import os
-from textwrap import dedent
-from typing import Any, Dict, Optional
-
-from rich.syntax import Syntax
 import pkgutil
-from sqlalchemy import sql
-from . import __version__
-
-import sqlmodel
-import typer
-from rich import inspect
-from rich.prompt import IntPrompt, Prompt, Confirm
-from rich.table import Table
-from rich.panel import Panel
-from rich.markdown import Markdown
-from sqlmodel import Session, SQLModel, create_engine, select, col
-
-from ._utils import get_db_url, get_tables, get_models, create_rich_table, sqlmodel_setup
-from ._console import console
-
 # SQLModel has known issue with an error message. Since this is a CLI application
 # this error message is really annoying. For now the error will be filtered out.
 # Note to self to monitor the GitHub issue for a resolution.
 # https://github.com/tiangolo/sqlmodel/issues/189
 import warnings
+from textwrap import dedent
+from typing import Any, Dict, Optional
+
+import sqlmodel
+import typer
+from rich import inspect
+from rich.markdown import Markdown
+from rich.panel import Panel
+from rich.prompt import Confirm, FloatPrompt, IntPrompt, Prompt
+from rich.pretty import Pretty
+from rich.syntax import Syntax
+from rich.table import Table
+from sqlalchemy import sql
+from sqlmodel import Session, SQLModel, col, create_engine, select
+
+from . import __version__
+from ._console import console
+from ._utils import (create_rich_table, get_db_url, get_foreign_key_table_name,
+                     get_models, get_primary_key, get_tables, sqlmodel_setup, is_foreign_key, get_foreign_key_column_name)
+
 warnings.filterwarnings("ignore", ".*Class SelectOfScalar will not make use of SQL compilation caching.*")
 
 
@@ -89,9 +90,9 @@ def init_demo(
             console.print(f"[info]Files NOT found: `{db_filename}` and `{models_filename}`")
         raise typer.Exit()
      
-    from ._demo.models import Sport, Athlete
     from ._demo.data import create_demo_data
-    
+    from ._demo.models import Athlete, Sport
+
     # Create a sqlite database.
     db_path = os.path.join(path, db_filename)
     sqlite_url = f"sqlite:///{db_path}"
@@ -203,48 +204,53 @@ def insert(
     foreign_keys = [i for i in obj.__table__.foreign_keys]
     
     # Get input from the user:
-    console.print(f"[cyan]Enter data for new {table_name}...")
     data = {}
     
-    
     for field in obj.__fields__.values():
-        prompt_txt = f"[blue]{field.name}[/] ({field.type_})"
+        console.rule(f"column: `{field.name}`")
         
         # Figure out the right type of prompt to render.
         if isinstance(1, field.type_):
             prompt = IntPrompt
+        elif isinstance(1.0, field.type_):
+            prompt = FloatPrompt
         else:
             prompt = Prompt
             
         # Check if the column is a foreign key. If it is a foreign key identify
         # the list of possible values.
-        prompt_choices = None
-        for fk in foreign_keys:
-            if fk.parent.name == field.name:
-                fk_ojb = tables[fk.column.table.name]
-                # Get a list of possible values
-                with Session(engine) as session:
-                    options_data = session.exec(select(fk_ojb)).all()
-                    console.print("Select one of...")
-                    console.print(options_data)
-                    pk_column = [i for i in fk_ojb.__table__._columns if i.primary_key][0]
-                    prompt_choices = [str(i.dict()[pk_column.name]) for i in options_data]
-                break
-        
+        if is_foreign_key(obj, field.name):
+            foreign_table_name = get_foreign_key_table_name(obj, field.name)
+            foreign_table = tables[foreign_table_name]
+            foreign_key_col_name = get_foreign_key_column_name(obj, field.name)
+            with Session(engine) as session:
+                options_data = session.exec(select(foreign_table)).all()
+                console.print("Select one of...")
+                console.print(create_rich_table(options_data))
+                prompt_choices = [str(i.dict()[foreign_key_col_name]) for i in options_data]
+        else:
+            prompt_choices = None      
                     
         # Determine if the field is optional or not.
+        prompt_txt = f"{field.type_}"
         if field.allow_none:
-            i = prompt.ask(f"{prompt_txt} [bold cyan](optional)", default=field.default, choices=prompt_choices)
+            i = prompt.ask(f"{prompt_txt} [info](optional)", default=field.default, choices=prompt_choices)
         else:
             i = prompt.ask(prompt_txt, choices=prompt_choices)
             
         data[field.name] = i
     
+    # Write the new data to the database.
     with Session(engine) as session:
         new_row = obj(**data)
-        console.print(new_row)
         session.add(new_row)
         session.commit()
+        session.refresh(new_row)
+        console.print(Panel(
+            Pretty(new_row.dict()),
+            title="New row successfully added :party_popper:",
+            border_style="green"
+        ))
         
     
 
