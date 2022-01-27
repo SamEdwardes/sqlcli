@@ -1,0 +1,159 @@
+# `sqlcli`
+
+A command line interface (CLI) for interacting with SQLModel.
+
+**Usage**:
+
+```console
+$ sqlcli [OPTIONS] COMMAND [ARGS]...
+```
+
+**Options**:
+
+* `--version`: Show the installed version.  [default: False]
+* `--install-completion`: Install completion for the current shell.
+* `--show-completion`: Show completion for the current shell, to copy it or customize the installation.
+* `--help`: Show this message and exit.
+
+**Commands**:
+
+* `create-all`: Create a database.
+* `docs`: Open the docs:...
+* `drop-all`: Drop a database.
+* `init-demo`: Create a demo database for exploring sqlcli.
+* `insert`: Insert a new record into the database.
+* `inspect`: Inspect a SQLModel with rich.inspect.
+* `select`: Query the database.
+
+## `sqlcli create-all`
+
+Create a database. The equivalent to calling
+`SQLModel.metadata.create_all(engine)`.
+
+**Usage**:
+
+```console
+$ sqlcli create-all [OPTIONS]
+```
+
+**Options**:
+
+* `-d, --database-url TEXT`: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable `DATABASE_URL`.
+* `-m, --models-path TEXT`: The location of the python script(s) that contain the SQLModels. If no argumentis provided sqlcli will check for a path in the environment variable`MODELS_PATH`.
+* `--help`: Show this message and exit.
+
+## `sqlcli docs`
+
+Open the docs: https://samedwardes.github.io/sqlcli/
+
+**Usage**:
+
+```console
+$ sqlcli docs [OPTIONS]
+```
+
+**Options**:
+
+* `--help`: Show this message and exit.
+
+## `sqlcli drop-all`
+
+Drop a database. The equivalent to calling
+`SQLModel.metadata.drop_all(engine)`.
+
+**Usage**:
+
+```console
+$ sqlcli drop-all [OPTIONS]
+```
+
+**Options**:
+
+* `-d, --database-url TEXT`: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable `DATABASE_URL`.
+* `-m, --models-path TEXT`: The location of the python script(s) that contain the SQLModels. If no argumentis provided sqlcli will check for a path in the environment variable`MODELS_PATH`.
+* `-y`: Danger! Skip the prompt and drop the database. This cannot be undone.  [default: False]
+* `--help`: Show this message and exit.
+
+## `sqlcli init-demo`
+
+Create a demo database for exploring sqlcli.
+
+Create a demo sqlite database to test with sqlcli.
+
+**Usage**:
+
+```console
+$ sqlcli init-demo [OPTIONS]
+```
+
+**Options**:
+
+* `--path TEXT`: The path to save the demo database  [default: .]
+* `--clear / --no-clear`: Remove all of the demo database related data including `demo_models.py` and `demo_database.db`.  [default: False]
+* `--help`: Show this message and exit.
+
+## `sqlcli insert`
+
+Insert a new record into the database.
+
+**Usage**:
+
+```console
+$ sqlcli insert [OPTIONS] [TABLE_NAME]
+```
+
+**Arguments**:
+
+* `[TABLE_NAME]`: The name of the table to query.
+
+**Options**:
+
+* `-d, --database-url TEXT`: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable `DATABASE_URL`.
+* `-m, --models-path TEXT`: The location of the python script(s) that contain the SQLModels. If no argumentis provided sqlcli will check for a path in the environment variable`MODELS_PATH`.
+* `--help`: Show this message and exit.
+
+## `sqlcli inspect`
+
+Inspect a SQLModel with rich.inspect.
+
+**Usage**:
+
+```console
+$ sqlcli inspect [OPTIONS] [TABLE_NAME]
+```
+
+**Arguments**:
+
+* `[TABLE_NAME]`: The name of the table to query.
+
+**Options**:
+
+* `-d, --database-url TEXT`: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable `DATABASE_URL`.
+* `-m, --models-path TEXT`: The location of the python script(s) that contain the SQLModels. If no argumentis provided sqlcli will check for a path in the environment variable`MODELS_PATH`.
+* `--help`: Show this message and exit.
+
+## `sqlcli select`
+
+Query the database.
+
+Query the database to see the data inside a given table. Calling `sqlcli
+select` is similar to calling `SELECT * FROM [table]`.
+
+**Usage**:
+
+```console
+$ sqlcli select [OPTIONS] [TABLE_NAME]
+```
+
+**Arguments**:
+
+* `[TABLE_NAME]`: The name of the table to query.
+
+**Options**:
+
+* `-n, --number-rows INTEGER`: The number of database rows to query.  [default: 10]
+* `-f, --format TEXT`: The format to output the data. Should be one of ['table', 'json', 'dict'].  [default: table]
+* `-d, --database-url TEXT`: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable `DATABASE_URL`.
+* `-m, --models-path TEXT`: The location of the python script(s) that contain the SQLModels. If no argumentis provided sqlcli will check for a path in the environment variable`MODELS_PATH`.
+* `-v, --verbose`: Show a more verbose output.  [default: False]
+* `--help`: Show this message and exit.
