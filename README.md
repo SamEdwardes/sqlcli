@@ -12,6 +12,8 @@ A command line interface (CLI) for interacting with SQLModel.
 
 <hr>
 
+![gif](docs/static/img/sqlcli-select.gif)
+
 ## Installation
 
 You can install *sqlcli* using pip:
@@ -30,17 +32,13 @@ The quickest way to get started with *sqlcli* is to create a demo sqlite databas
 sqlcli init-demo
 ```
 
-This will create a small sqlite database on your computer. The you can use sqlcli to explore your database.
+This will create a small sqlite database on your computer. The you can use sqlcli to explore your database. View your table by using the `select` command.
 
 ```bash
-sqlcli select -d "sqlite:///demo_database.db" -m "demo_models.py"
+sqlcli select athlete -d "sqlite:///demo_database.db" -m "demo_models.py"
 ```
 
-<div class="termy">
-
-```console
-$ sqlcli select -d "sqlite:///demo_database.db" -m "demo_models.py"
-# Please select a table [sport/athlete]:$ athlete
+```bash
 ┏━━━━┳━━━━━━━━━━┳━━━━━━━━━━┓
 ┃ id ┃ name     ┃ sport_id ┃
 ┡━━━━╇━━━━━━━━━━╇━━━━━━━━━━┩
@@ -52,7 +50,6 @@ $ sqlcli select -d "sqlite:///demo_database.db" -m "demo_models.py"
 │ 6  │ Ovechkin │ 2        │
 │ 7  │ Sundin   │ 2        │
 │ 8  │ Domi     │ 2        │
+│ 9  │ Carter   │ 1        │
 └────┴──────────┴──────────┘
 ```
-
-</div>
