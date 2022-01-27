@@ -1,5 +1,7 @@
 # sqlcli
 
+[![PyPI version](https://badge.fury.io/py/sqlcli.svg)](https://badge.fury.io/py/sqlcli)
+
 A command line interface (CLI) for interacting with SQLModel.
 
 <hr>

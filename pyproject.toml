@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sqlcli"
-version = "0.1.0-alpha.0"
+version = "0.1.0-alpha.1"
 description = "A command line interface (CLI) for interacting with SQLModel."
 authors = ["SamEdwardes <edwardes.s@gmail.com>"]
 license = "MIT"
