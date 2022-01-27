@@ -1,29 +1,22 @@
-
 import json
 import os
 import pkgutil
 import warnings
 from textwrap import dedent
-from typing import Any, Dict, Optional
+from typing import Optional
 
-import sqlmodel
 import typer
 from rich import inspect
-from rich.markdown import Markdown
 from rich.panel import Panel
 from rich.pretty import Pretty
 from rich.prompt import Confirm, FloatPrompt, IntPrompt, Prompt
-from rich.syntax import Syntax
-from rich.table import Table
-from sqlalchemy import sql
-from sqlmodel import Session, SQLModel, col, create_engine, select
+from sqlmodel import Session, SQLModel, create_engine, select
 
 from . import __version__
 from ._console import console, error_console
 from ._help import database_url_help, models_path_help, table_name_help
-from ._utils import (create_rich_table, get_db_url,
-                     get_foreign_key_column_name, get_foreign_key_table_name,
-                     get_models, get_tables, is_foreign_key,
+from ._utils import (create_rich_table, get_foreign_key_column_name,
+                     get_foreign_key_table_name, is_foreign_key,
                      sqlmodel_setup, validate_table_name)
 
 # SQLModel has known issue with an error message. Since this is a CLI application
@@ -115,8 +108,7 @@ def init_demo(
     
     docs_url = "https://samedwardes.github.io/sqlcli/tutorial/using-demo-db/"
     text = f"[info]For instructions on how to use the demo database visit {docs_url}."
-    console.print(text)
-    
+    console.print(text)  
     
 
 @app.command('select')
