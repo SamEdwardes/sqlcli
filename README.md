@@ -12,7 +12,7 @@ A command line interface (CLI) for interacting with SQLModel.
 
 <hr>
 
-![gif](docs/static/img/sqlcli-select.gif)
+<img src="https://i.imgur.com/MSFiWRS.gif"/>
 
 ## Installation
 
