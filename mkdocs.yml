@@ -46,10 +46,12 @@ nav:
   - Home: 'index.md'
   - changelog.md
   - contributing.md
-  - api/api-reference.md
+  - api-reference.md
   - Tutorial - User Guide:
     - tutorial/getting-started.md
     - tutorial/using-demo-db.md
+    - tutorial/reading-data.md
+    - tutorial/inserting-data.md
 
 extra_css:
   - static/css/termynal.css

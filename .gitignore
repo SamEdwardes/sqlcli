@@ -1,9 +1,9 @@
 # sqlcli
 demo_database.db
+demo_models.py
 database.db
 settings.json
 tmp.py
-models.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

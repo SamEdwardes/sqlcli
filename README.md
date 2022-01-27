@@ -33,5 +33,26 @@ sqlcli init-demo
 This will create a small sqlite database on your computer. The you can use sqlcli to explore your database.
 
 ```bash
-sqlcli select athlete --database-url "sqlite:///demo_database.db" --models-module "demo_models.py"
+sqlcli select -d "sqlite:///demo_database.db" -m "demo_models.py"
 ```
+
+<div class="termy">
+
+```console
+$ sqlcli select -d "sqlite:///demo_database.db" -m "demo_models.py"
+# Please select a table [sport/athlete]:$ athlete
+┏━━━━┳━━━━━━━━━━┳━━━━━━━━━━┓
+┃ id ┃ name     ┃ sport_id ┃
+┡━━━━╇━━━━━━━━━━╇━━━━━━━━━━┩
+│ 1  │ Ronaldo  │ 1        │
+│ 2  │ Messi    │ 1        │
+│ 3  │ Beckham  │ 1        │
+│ 4  │ Gretzky  │ 2        │
+│ 5  │ Crosby   │ 2        │
+│ 6  │ Ovechkin │ 2        │
+│ 7  │ Sundin   │ 2        │
+│ 8  │ Domi     │ 2        │
+└────┴──────────┴──────────┘
+```
+
+</div>
