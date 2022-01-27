@@ -1,4 +1,4 @@
-# Reading data
+# Reading data with `select`
 
 With *sqlcli* you can read data from your database in the command line. The `sqlcli select` command lets you select any table from your database.
 

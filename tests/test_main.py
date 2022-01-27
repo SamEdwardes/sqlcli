@@ -1,9 +1,25 @@
-from typer.testing import CliRunner
 import os
 
+import pytest
 from sqlcli.main import app
+from typer.testing import CliRunner
+# from sqlcli._demo.data import create_demo_data
+# from sqlcli._demo.models import Sport, Athlete
 
+# from sqlmodel import create_engine, Session, SQLModel
 runner = CliRunner()
+
+SPORT_RICH_TABLE = """
+┏━━━━┳━━━━━━━━┓
+┃ id ┃ name   ┃
+┡━━━━╇━━━━━━━━┩
+│ 1  │ Soccer │
+│ 2  │ Hockey │
+└────┴────────┘
+"""
+
+DATABASE_URL = "sqlite:///demo_database.db"
+MODEL_PATH = "demo_models.py"
 
 
 def test_version():
@@ -11,21 +27,12 @@ def test_version():
     assert result.exit_code == 0
     assert result.stdout.strip() == "0.1.0-alpha.0"
     
-    
-def test_app():
-    result = runner.invoke(app, ["hello-world"])
-    assert result.exit_code == 0
-    assert result.stdout.strip() == "hello world!"
-    
 
-def test_init_demo():
-    result = runner.invoke(app, ["init-demo"])
+@pytest.mark.filterwarnings("ignore:Class SelectOfScalar will not")
+def test_select():
+
+    # Run tests.
+    result = runner.invoke(app, ["select", "sport", "-d", DATABASE_URL, "-m", MODEL_PATH])
     assert result.exit_code == 0
-    assert os.path.isfile("demo_database.db")
-    assert os.path.isfile("demo_models.py")
-    
-    # tear down the db.
-    runner.invoke(app, ["init-demo", "--clear"])
-    assert os.path.isfile("demo_database.db") == False 
-    assert os.path.isfile("demo_models.py") == False
+    assert result.stdout.strip() == SPORT_RICH_TABLE.strip()
     

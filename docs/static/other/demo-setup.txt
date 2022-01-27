@@ -1,0 +1,10 @@
+```bash
+sqlcli init-demo
+```
+
+To avoid having to specify the database and models with each command lets set our two optional environment variables:
+
+```bash
+export DATABASE_URL="sqlite:///demo_database.db"
+export MODELS_PATH="demo_models.py"
+```

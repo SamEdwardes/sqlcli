@@ -8,7 +8,7 @@ theme:
   name: material
   icon:
     logo: fontawesome/solid/terminal
-  favicon: img/terminal-solid.svg
+  favicon: static/img/terminal-solid.svg
   features:
     - search.suggest
     - search.highlight
@@ -44,14 +44,15 @@ extra:
 
 nav:
   - Home: 'index.md'
-  - changelog.md
-  - contributing.md
+  - features.md
   - api-reference.md
   - Tutorial - User Guide:
     - tutorial/getting-started.md
     - tutorial/using-demo-db.md
     - tutorial/reading-data.md
     - tutorial/inserting-data.md
+  - contributing.md
+  - changelog.md
 
 extra_css:
   - static/css/termynal.css

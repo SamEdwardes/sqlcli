@@ -19,7 +19,9 @@ def get_db_url(database_url: Optional[str] = None):
         
         if not database_url:
             msg = "Please ensure that an environment variable is set for `DATABASE_URL` or pass in the url to the database_url option."
-            raise NameError(msg)
+            error_console.print(msg)
+            raise typer.Exit(code=1)
+            
         
     return database_url
 
@@ -38,7 +40,10 @@ def get_models(models_path: Optional[str] = None):
     if not models_path:
         models_path = os.getenv("MODELS_PATH")
         if not models_path:
-            raise NameError("No modules_path specific")
+            msg = "No modules_path specified. You can set a modules_path by either passing in a value to the -m option or by setting an environment variable `export MODELS_PATH='demo_models.py'`"
+            error_console.print(msg)
+            raise typer.Exit(code=1)
+        
         
     models_path = os.path.normpath(models_path)
     path, filename = os.path.split(models_path)
@@ -49,20 +54,6 @@ def get_models(models_path: Optional[str] = None):
     spec.loader.exec_module(models)
         
     return models
-
-
-def get_primary_key(obj: SQLModel) -> Column:
-    """Find and return the primary key column from a SQLModel table."""
-    pk_columns = [i for i in obj.__table__._columns if i.primary_key]
-    if len(pk_columns)> 1:
-        msg = f"The table has more than 1 primary key. The table must have only 1 primary key."
-        raise PrimaryKeyError(msg)
-    elif len(pk_columns) == 0:
-        msg = f"The table has 0 primary keys. The table must have only 1 primary key."
-        raise PrimaryKeyError(msg)
-    
-    pk = pk_columns[0]
-    return pk
 
 
 def is_foreign_key(obj, field_name: str) -> bool:

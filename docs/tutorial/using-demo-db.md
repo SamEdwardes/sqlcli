@@ -3,7 +3,7 @@
 For *sqlcli* to be useful you need two things:
 
 1. **database**
-2. **SQLModel** classes
+2. **SQLModel** object(s)
 
 Luckily, *sqlcli* comes with a built in command to spin up a small SQLite database and a python file with SQLModel classes you can using for experimenting. 
 

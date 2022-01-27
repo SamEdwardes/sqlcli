@@ -2,6 +2,7 @@
 import json
 import os
 import pkgutil
+import warnings
 from textwrap import dedent
 from typing import Any, Dict, Optional
 
@@ -17,22 +18,19 @@ from rich.table import Table
 from sqlalchemy import sql
 from sqlmodel import Session, SQLModel, col, create_engine, select
 
-import sqlcli
-
 from . import __version__
 from ._console import console, error_console
+from ._help import database_url_help, models_path_help, table_name_help
 from ._utils import (create_rich_table, get_db_url,
                      get_foreign_key_column_name, get_foreign_key_table_name,
-                     get_models, get_primary_key, get_tables, is_foreign_key,
+                     get_models, get_tables, is_foreign_key,
                      sqlmodel_setup, validate_table_name)
 
 # SQLModel has known issue with an error message. Since this is a CLI application
 # this error message is really annoying. For now the error will be filtered out.
 # Note to self to monitor the GitHub issue for a resolution.
 # https://github.com/tiangolo/sqlmodel/issues/189
-import warnings
 warnings.filterwarnings("ignore", ".*Class SelectOfScalar will not make use of SQL compilation caching.*")
-
 
 app = typer.Typer(help="A command line interface (CLI) for interacting with SQLModel.")
 
@@ -47,31 +45,7 @@ def version_callback(value: bool):
 def main(
     version: bool = typer.Option(False, "--version", callback=version_callback, is_eager=True, help="Show the installed version."),
 ):
-    return None
-
-
-
-# Shared help strings.
-database_url_help = """
-A database connection string. If no connection string is provided sqlcli will
-check for a connection string in the environment variable `DATABASE_URL`.
-""".strip().replace("\n", "")
-
-models_path_help = """
-The location of the python script(s) that contain the SQLModels. If no argument
-is provided sqlcli will check for a path in the environment variable
-`MODELS_PATH`.
-""".strip().replace("\n", "")
-
-table_name_help = """
-The name of the table to query.
-""".strip().replace("\n", "")
-
-
-@app.command()
-def hello_world():
-    console.print("hello world!")
-    
+    return None    
 
 
 @app.command()
@@ -149,7 +123,7 @@ def init_demo(
 def select_sqlcli(
     table_name: Optional[str] = typer.Argument(None, help=table_name_help), 
     n: int = typer.Option(10, "--number-rows", "-n", help="The number of database rows to query."),
-    format: str = typer.Option('table', "--format", "-f",  help="The format to output the data. Should be one of [None, 'json', 'dict', 'table']"),
+    format: str = typer.Option('table', "--format", "-f",  help="The format to output the data. Should be one of ['table', 'json', 'dict']."),
     database_url: Optional[str] = typer.Option(None, "--database-url", "-d", help=database_url_help),
     models_path: Optional[str] = typer.Option(None, "--models-path", "-m", help=models_path_help),
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Show a more verbose output.")
