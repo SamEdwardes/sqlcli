@@ -7,7 +7,7 @@ class Sport(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
     athletes: List["Athlete"] = Relationship(back_populates="sport")
-    
+
 
 class Athlete(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
