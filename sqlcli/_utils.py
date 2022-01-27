@@ -1,12 +1,14 @@
 import importlib
 import os
 from typing import Dict, List, Optional, Tuple
+from types import ModuleType
 
 import typer
 from rich import inspect
 from rich.prompt import Prompt
 from rich.table import Table
 from sqlalchemy import Column
+from sqlalchemy.future.engine import Engine
 from sqlmodel import SQLModel, create_engine
 
 from ._console import console, error_console
@@ -77,7 +79,9 @@ def get_foreign_key_table_name(obj: SQLModel, field_name: str) -> Optional[str]:
     return None
 
 
-def sqlmodel_setup(models_path: str, database_url: str):
+def sqlmodel_setup(
+    models_path: str, database_url: str
+) -> Tuple[ModuleType, str, Engine, Dict[str, SQLModel]]:
     """Quickstart for getting required objects"""
     models = get_models(models_path)
     url = get_db_url(database_url)
@@ -87,11 +91,21 @@ def sqlmodel_setup(models_path: str, database_url: str):
 
 
 def create_rich_table(data: List[SQLModel], **kwargs) -> Table:
+    """Convert a list of SQLModel objects into a rich table."""
     table = Table(**kwargs)
-    for col_name in data[0].dict().keys():
+    # Note that column names are accessed via .__table__.columns._all_columns
+    # because it guarantees the correct order. If you were to use the more
+    # succinct `for col in data[0].dict().keys()` the order can change.
+    for col in data[0].__table__.columns._all_columns:
+        col_name = col.name
         table.add_column(col_name)
+
     for row in data:
-        table.add_row(*[str(i) for i in row.dict().values()])
+        row_data = []
+        for col in row.__table__.columns._all_columns:
+            row_data.append(row.dict()[col.name])
+        row_data = [str(i) for i in row_data]
+        table.add_row(*row_data)
     return table
 
 

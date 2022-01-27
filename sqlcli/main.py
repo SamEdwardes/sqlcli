@@ -295,13 +295,19 @@ def drop_all(
     text = dedent(
         "[bold red]Are you sure you want to drop the database? This cannot be undone."
     )
-    if Confirm.ask(text):
+
+    def drop_the_db():
         console.print("Dropping the database...")
         models, url, engine, tables = sqlmodel_setup(models_path, database_url)
         SQLModel.metadata.drop_all(engine)
         console.print(":white_check_mark:​ Complete!")
+
+    if do_not_prompt:
+        drop_the_db()
+    elif Confirm.ask(text):
+        drop_the_db()
     else:
-        console.print("Aborting!")
+        raise typer.Abort()
 
 
 @app.command()
