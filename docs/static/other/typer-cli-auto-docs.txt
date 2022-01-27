@@ -20,7 +20,6 @@ $ sqlcli [OPTIONS] COMMAND [ARGS]...
 * `create-all`: Create a database.
 * `docs`: Open the docs:...
 * `drop-all`: Drop a database.
-* `hello-world`
 * `init-demo`: Create a demo database for exploring sqlcli.
 * `insert`: Insert a new record into the database.
 * `inspect`: Inspect a SQLModel with rich.inspect.
@@ -73,18 +72,6 @@ $ sqlcli drop-all [OPTIONS]
 * `-d, --database-url TEXT`: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable `DATABASE_URL`.
 * `-m, --models-path TEXT`: The location of the python script(s) that contain the SQLModels. If no argumentis provided sqlcli will check for a path in the environment variable`MODELS_PATH`.
 * `-y`: Danger! Skip the prompt and drop the database. This cannot be undone.  [default: False]
-* `--help`: Show this message and exit.
-
-## `sqlcli hello-world`
-
-**Usage**:
-
-```console
-$ sqlcli hello-world [OPTIONS]
-```
-
-**Options**:
-
 * `--help`: Show this message and exit.
 
 ## `sqlcli init-demo`
@@ -165,7 +152,7 @@ $ sqlcli select [OPTIONS] [TABLE_NAME]
 **Options**:
 
 * `-n, --number-rows INTEGER`: The number of database rows to query.  [default: 10]
-* `-f, --format TEXT`: The format to output the data. Should be one of [None, 'json', 'dict', 'table']  [default: table]
+* `-f, --format TEXT`: The format to output the data. Should be one of ['table', 'json', 'dict'].  [default: table]
 * `-d, --database-url TEXT`: A database connection string. If no connection string is provided sqlcli willcheck for a connection string in the environment variable `DATABASE_URL`.
 * `-m, --models-path TEXT`: The location of the python script(s) that contain the SQLModels. If no argumentis provided sqlcli will check for a path in the environment variable`MODELS_PATH`.
 * `-v, --verbose`: Show a more verbose output.  [default: False]
