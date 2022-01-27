@@ -5,6 +5,9 @@ description = "A command line interface (CLI) for interacting with SQLModel."
 authors = ["SamEdwardes <edwardes.s@gmail.com>"]
 license = "MIT"
 readme = "README.md"
+repository = "https://github.com/SamEdwardes/sqlcli"
+documentation = "https://samedwardes.github.io/sqlcli/"
+keywords = ["sql", "cli", "typer", "python", "sqlmodel", "rich", "sqlalchemy"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
