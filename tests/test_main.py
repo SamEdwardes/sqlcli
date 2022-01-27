@@ -3,10 +3,7 @@ import os
 import pytest
 from sqlcli.main import app
 from typer.testing import CliRunner
-# from sqlcli._demo.data import create_demo_data
-# from sqlcli._demo.models import Sport, Athlete
 
-# from sqlmodel import create_engine, Session, SQLModel
 runner = CliRunner()
 
 SPORT_RICH_TABLE = """
@@ -29,10 +26,38 @@ def test_version():
     
 
 @pytest.mark.filterwarnings("ignore:Class SelectOfScalar will not")
-def test_select():
+def test_init_demo():
+    result = runner.invoke(app, ["init-demo"])
+    assert result.exit_code == 0
+    assert os.path.isfile("demo_database.db")
+    assert os.path.isfile("demo_models.py")   
+    
 
-    # Run tests.
+@pytest.mark.filterwarnings("ignore:Class SelectOfScalar will not")
+def test_select():
     result = runner.invoke(app, ["select", "sport", "-d", DATABASE_URL, "-m", MODEL_PATH])
     assert result.exit_code == 0
     assert result.stdout.strip() == SPORT_RICH_TABLE.strip()
-    
+
+
+@pytest.mark.filterwarnings("ignore:Class SelectOfScalar will not")
+def test_select_with_input():
+    result = runner.invoke(app, ["select", "-d", DATABASE_URL, "-m", MODEL_PATH], input="sport")
+    assert result.exit_code == 0
+    assert result.stdout.strip().endswith(SPORT_RICH_TABLE.strip())
+
+
+# @pytest.mark.filterwarnings("ignore:Class SelectOfScalar will not")
+# def test_insert():
+#     result = runner.invoke(app, ["insert", "sport", "-d", DATABASE_URL, "-m", MODEL_PATH], input="MMA\n")
+#     assert result.exit_code == 0
+
+
+# Note this test should always run last!
+@pytest.mark.filterwarnings("ignore:Class SelectOfScalar will not")
+def test_init_demo_clear():
+    # Rear down the db.
+    result = runner.invoke(app, ["init-demo", "--clear"])
+    assert result.exit_code == 0
+    assert os.path.isfile("demo_database.db") == False 
+    assert os.path.isfile("demo_models.py") == False

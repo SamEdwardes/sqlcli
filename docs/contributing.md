@@ -22,6 +22,14 @@ mkdocs serve
 python scripts/docs.py publish-docs
 ```
 
+## Testing
+
+Testing is performed with pytest. When running make sure to pass the `--forked` so that pytest spins up a "fresh" environment for each test. The `--forked` option comes from [pytest-xdist](https://github.com/pytest-dev/pytest-xdist).
+
+```bash
+pytest --forked
+```
+
 ## Credits
 
 ### Open source libraries
