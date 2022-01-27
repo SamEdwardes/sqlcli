@@ -385,6 +385,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    Testing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#credits" class="md-nav__link">
     Credits
   </a>
@@ -468,6 +475,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    Testing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#credits" class="md-nav__link">
     Credits
   </a>
@@ -524,6 +538,10 @@
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox"/><span class="task-list-indicator"></span></label> Publish to GitHub pages.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python scripts/docs.py publish-docs
+</code></pre></div>
+<h2 id="testing">Testing</h2>
+<p>Testing is performed with pytest. When running make sure to pass the <code>--forked</code> so that pytest spins up a "fresh" environment for each test. The <code>--forked</code> option comes from <a href="https://github.com/pytest-dev/pytest-xdist">pytest-xdist</a>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pytest --forked
 </code></pre></div>
 <h2 id="credits">Credits</h2>
 <h3 id="open-source-libraries">Open source libraries</h3>
