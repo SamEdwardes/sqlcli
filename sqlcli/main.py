@@ -106,6 +106,7 @@ def init_demo(
             console.print(create_rich_table(data))
 
     # Create a model.py for the user to use with the demo.
+    console.print("[red bold]Creating models module")
     model_text = pkgutil.get_data(__name__, "_demo/models.py").decode("utf-8")
     with open("./demo_models.py", "w") as f:
         f.write(model_text)
