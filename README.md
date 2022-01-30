@@ -1,6 +1,7 @@
 # sqlcli
 
 [![PyPI version](https://badge.fury.io/py/sqlcli.svg)](https://badge.fury.io/py/sqlcli)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/sqlcli?label=pypi%20downloads)
 
 A command line interface (CLI) for interacting with SQLModel.
 
@@ -45,7 +46,7 @@ sqlcli init-demo
 This will create a small sqlite database on your computer. The you can use sqlcli to explore your database. View your table by using the `select` command.
 
 ```bash
-sqlcli select athlete -d "sqlite:///demo_database.db" -m "demo_models.py"
+sqlcli select athlete -d "sqlite:///sqlcli_demo/database.db" -m "sqlcli_demo/models.py"
 ```
 
 ```bash

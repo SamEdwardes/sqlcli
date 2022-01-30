@@ -1,6 +1,18 @@
 # Reading data with `select`
 
-With *sqlcli* you can read data from your database in the command line. The `sqlcli select` command lets you select any table from your database.
+With *sqlcli* you can read data from your database in the command line. The `sqlcli select` command lets you select any table from your database. It is similar to the `SELECT` statement in SQL.
+
+```bash
+# using sqlcli
+sqlcli select <TABLE>
+```
+
+```sql
+-- using sql
+SELECT * FROM <TABLE>
+```
+
+
 
 ## Set up the demo database
 
@@ -13,8 +25,8 @@ sqlcli init-demo
 To avoid having to specify the database and models with each command lets set our two optional environment variables:
 
 ```bash
-export DATABASE_URL="sqlite:///demo_database.db"
-export MODELS_PATH="demo_models.py"
+export DATABASE_URL="sqlite:///sqlcli_demo/database.db"
+export MODELS_PATH="sqlcli_demo/models.py"
 ```
 
 Now you are ready to select data from the demo database 🙌

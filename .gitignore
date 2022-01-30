@@ -1,6 +1,6 @@
 # sqlcli
-demo_database.db
-demo_models.py
+sqlcli_demo/database.db
+sqlcli_demo/models.py
 database.db
 settings.json
 tmp.py

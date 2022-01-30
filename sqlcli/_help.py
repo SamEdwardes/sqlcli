@@ -18,7 +18,8 @@ is provided sqlcli will check for a path in the environment variable
 )
 
 table_name_help = """
-The name of the table to query.
+The name of the table to query. If no name is provided the interactive prompt
+will ask for a table name.
 """.strip().replace(
     "\n", ""
 )

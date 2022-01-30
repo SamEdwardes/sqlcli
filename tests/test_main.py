@@ -15,22 +15,22 @@ SPORT_RICH_TABLE = """
 └────┴────────┘
 """
 
-DATABASE_URL = "sqlite:///demo_database.db"
-MODEL_PATH = "demo_models.py"
+DATABASE_URL = "sqlite:///sqlcli_demo/database.db"
+MODEL_PATH = "sqlcli_demo/models.py"
 
 
 def test_version():
     result = runner.invoke(app, ["--version"])
     assert result.exit_code == 0
-    assert result.stdout.strip() == "0.1.0-alpha.0"
+    assert result.stdout.strip() == "0.1.0"
     
 
 @pytest.mark.filterwarnings("ignore:Class SelectOfScalar will not")
 def test_init_demo():
     result = runner.invoke(app, ["init-demo"])
     assert result.exit_code == 0
-    assert os.path.isfile("demo_database.db")
-    assert os.path.isfile("demo_models.py")   
+    assert os.path.isfile("sqlcli_demo/database.db")
+    assert os.path.isfile("sqlcli_demo/models.py")   
     
 
 @pytest.mark.filterwarnings("ignore:Class SelectOfScalar will not")
@@ -59,5 +59,5 @@ def test_init_demo_clear():
     # Rear down the db.
     result = runner.invoke(app, ["init-demo", "--clear"])
     assert result.exit_code == 0
-    assert os.path.isfile("demo_database.db") == False 
-    assert os.path.isfile("demo_models.py") == False
+    assert os.path.isfile("sqlcli_demo/database.db") == False 
+    assert os.path.isfile("sqlcli_demo/models.py") == False

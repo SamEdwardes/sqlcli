@@ -17,7 +17,7 @@ def run_bash_command(bash_command: str):
 @app.command()
 def build_typer_docs():
     """Build the typer API docs."""
-    run_bash_command("typer sqlcli.main utils docs --output docs/static/other/typer-cli-auto-docs.txt --name sqlcli")
+    run_bash_command("python -m typer-cli sqlcli.main utils docs --output docs/static/other/typer-cli-auto-docs.txt --name sqlcli")
         
 
 @app.command()

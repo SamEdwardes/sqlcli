@@ -1,5 +1,16 @@
 # Contributing
 
+*sqlcli* welcomes all contributors. If you would like to make a contribution please create a fork of the repository and then submit a pull request.
+
+## Pull request check list
+
+When creating a pull request please ensure you have completed the following:
+
+- [ ] Run the black code formatter (`black sqlcli`).
+- [ ] Run pytest (`pytest --forked`).
+- [ ] Re-build the docs api reference (`python scripts/docs.py build-typer-docs`).
+- [ ] Preview the docs (`mkdocs serve`)
+
 ## Docs
 
 The docs are hosted on GitHub pages at: [https://samedwardes.github.io/sqlcli/](https://samedwardes.github.io/sqlcli/). When making changes remember to do the following:
@@ -36,11 +47,11 @@ pytest --forked
 
 Like all great open source software *sqlcli* is built on the shoulders of giants. *sqlcli* relies heavily on:
 
-- sqlmodel
-- sqlalchemy
-- typer
-- rich
-- mkdocs-material
+- [sqlmodel](https://github.com/tiangolo/sqlmodel)
+- [sqlalchemy](https://www.sqlalchemy.org/)
+- [typer](https://github.com/tiangolo/typer)
+- [rich](https://github.com/Textualize/rich)
+- [mkdocs-material](https://squidfunk.github.io/mkdocs-material/)
 - and many more!
 
 See the [pyproject.toml](https://github.com/SamEdwardes/sqlcli/blob/main/pyproject.toml) for all requirements.

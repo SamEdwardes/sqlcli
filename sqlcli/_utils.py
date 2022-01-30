@@ -41,7 +41,7 @@ def get_models(models_path: Optional[str] = None):
     if not models_path:
         models_path = os.getenv("MODELS_PATH")
         if not models_path:
-            msg = "No modules_path specified. You can set a modules_path by either passing in a value to the -m option or by setting an environment variable `export MODELS_PATH='demo_models.py'`"
+            msg = "No modules_path specified. You can set a modules_path by either passing in a value to the -m option or by setting an environment variable `export MODELS_PATH='sqlcli_demo/models.py'`"
             error_console.print(msg)
             raise typer.Exit(code=1)
 

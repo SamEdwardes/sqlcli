@@ -34,21 +34,21 @@ $ sqlcli init-demo
 └────┴──────────┴──────────┘
 ───────────────── how to use the demo database ──────────────────
 A demo database has been created at:
-/Users/samedwardes/git/sqlcli/demo_database.db
+/Users/samedwardes/git/sqlcli/sqlcli_demo/database.db
 
 Demo models have been saved to:
-/Users/samedwardes/git/sqlcli/demo_models.py
+/Users/samedwardes/git/sqlcli/sqlcli_demo/models.py
 
 Here are some example commands to get you started:
 
-sqlcli select athlete -d "sqlite:///demo_database.db" -m demo_models.py
-sqlcli insert -d "sqlite:///demo_database.db" -m demo_models.py
+sqlcli select athlete -d "sqlite:///sqlcli_demo/database.db" -m sqlcli_demo/models.py
+sqlcli insert -d "sqlite:///sqlcli_demo/database.db" -m sqlcli_demo/models.py
 
 To avoid passing in the `-d` and -`m` option everytime you can set the following environment 
 variables:
 
-export DATABASE_URL="sqlite:///demo_database.db"
-export MODELS_PATH="demo_models.py"
+export DATABASE_URL="sqlite:///sqlcli_demo/database.db"
+export MODELS_PATH="sqlcli_demo/models.py"
 
 For instructions on how to use the demo database visit 
 https://samedwardes.github.io/sqlcli/tutorial/using-demo-db/.
@@ -61,13 +61,13 @@ https://samedwardes.github.io/sqlcli/tutorial/using-demo-db/.
 Select data from your SQL database using the `select` command:
 
 ```bash
-sqlcli select athlete -d "sqlite:///demo_database.db" -m "demo_models.py"
+sqlcli select athlete -d "sqlite:///sqlcli_demo/database.db" -m "sqlcli_demo/models.py"
 ```
 
 <div class="termy">
 
 ```console
-$ sqlcli select athlete -d "sqlite:///demo_database.db" -m "demo_models.py"
+$ sqlcli select athlete -d "sqlite:///sqlcli_demo/database.db" -m "sqlcli_demo/models.py"
 ┏━━━━┳━━━━━━━━━━┳━━━━━━━━━━┓
 ┃ id ┃ sport_id ┃ name     ┃
 ┡━━━━╇━━━━━━━━━━╇━━━━━━━━━━┩
@@ -89,13 +89,13 @@ $ sqlcli select athlete -d "sqlite:///demo_database.db" -m "demo_models.py"
 Interactively insert new data using the `insert` command:
 
 ```bash
-sqlcli insert athlete -d "sqlite:///demo_database.db" -m "demo_models.py"
+sqlcli insert athlete -d "sqlite:///sqlcli_demo/database.db" -m "sqlcli_demo/models.py"
 ```
 
 <div class="termy">
 
 ```console
-$ sqlcli insert athlete -d "sqlite:///demo_database.db" -m "demo_models.py"
+$ sqlcli insert athlete -d "sqlite:///sqlcli_demo/database.db" -m "sqlcli_demo/models.py"
 
 ───────────────────────── column: `id` ──────────────────────────
 # <class 'int'> (optional):$ 
@@ -124,8 +124,8 @@ options below from the `id` column:
 Type less by setting a default database url and models module:
 
 ```bash
-export DATABASE_URL="sqlite:///demo_database.db"
-export MODELS_PATH="demo_models.py"
+export DATABASE_URL="sqlite:///sqlcli_demo/database.db"
+export MODELS_PATH="sqlcli_demo/models.py"
 ```
 
 ```bash

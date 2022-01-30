@@ -26,13 +26,13 @@ This will create a new sqlite database on your computer and the related SQLModel
 
 ```bash
 .
-├── demo_database.db # A sqlite database with demo data.
-└── demo_models.py   # SQLModel classes that map to the demo database.
+├── sqlcli_demo/database.db # A sqlite database with demo data.
+└── sqlcli_demo/models.py   # SQLModel classes that map to the demo database.
 ```
 
 With these two files you have everything you need to start working with *sqlcli* 🎉. The demo models are defined as follows:
 
-```Python title="demo_models.py" linenums="1"
+```Python title="sqlcli_demo/models.py" linenums="1"
 {!./sqlcli/_demo/models.py!}
 ```
 
@@ -46,13 +46,13 @@ play with *sqlcli*! Lets try a few different commands and see what happens.
 The `select` command is similar to `SELECT * FROM <TABLE>` in SQL. You can use it to view your data.
 
 ```bash
-sqlcli select -d "sqlite:///demo_database.db" -m "demo_models.py"
+sqlcli select -d "sqlite:///sqlcli_demo/database.db" -m "sqlcli_demo/models.py"
 ```
 
 <div class="termy">
 
 ```console
-$ sqlcli select -d "sqlite:///demo_database.db" -m "demo_models.py"
+$ sqlcli select -d "sqlite:///sqlcli_demo/database.db" -m "sqlcli_demo/models.py"
 # Please select a table [sport/athlete]:$ athlete
 ┏━━━━┳━━━━━━━━━━┳━━━━━━━━━━┓
 ┃ id ┃ name     ┃ sport_id ┃
@@ -70,18 +70,18 @@ $ sqlcli select -d "sqlite:///demo_database.db" -m "demo_models.py"
 
 </div>
 
-Because you defined your models in the *demo_models.py* file *sqlcli* knows the tables that are in your database and will automatically prompt you to choose of the tables.
+Because you defined your models in the *sqlcli_demo/models.py* file *sqlcli* knows the tables that are in your database and will automatically prompt you to choose of the tables.
 
 Sometimes you may already know the name of your table. In that case, you can pass the name of the table to the `select` command as an argument.
 
 ```bash
-sqlcli select sport -d "sqlite:///demo_database.db" -m "demo_models.py"
+sqlcli select sport -d "sqlite:///sqlcli_demo/database.db" -m "sqlcli_demo/models.py"
 ```
 
 <div class="termy">
 
 ```console
-$ sqlcli select sport -d "sqlite:///demo_database.db" -m "demo_models.py"
+$ sqlcli select sport -d "sqlite:///sqlcli_demo/database.db" -m "sqlcli_demo/models.py"
 ┏━━━━┳━━━━━━━━━━┳━━━━━━━━━━┓
 ┃ id ┃ sport_id ┃ name     ┃
 ┡━━━━╇━━━━━━━━━━╇━━━━━━━━━━┩
@@ -103,13 +103,13 @@ $ sqlcli select sport -d "sqlite:///demo_database.db" -m "demo_models.py"
 The `insert` command is similar to `INSERT INTO <TABLE>` from SQL. You can use it to add new records to your database. Just like with the select command you can optionally specify the name of the table if you already know it. Try it out!
 
 ```bash
-sqlcli insert athlete -d "sqlite:///demo_database.db" -m "demo_models.py"
+sqlcli insert athlete -d "sqlite:///sqlcli_demo/database.db" -m "sqlcli_demo/models.py"
 ```
 
 <div class="termy">
 
 ```console
-$ sqlcli insert athlete -d "sqlite:///demo_database.db" -m "demo_models.py"
+$ sqlcli insert athlete -d "sqlite:///sqlcli_demo/database.db" -m "sqlcli_demo/models.py"
 
 ───────────────────────── column: `id` ──────────────────────────
 # <class 'int'> (optional):$ 
@@ -144,7 +144,7 @@ Because you defined your models using SQLModel sqlcli already knows a lot about 
 It can be annoying to specify the database URL and SQLModel modules every time. To avoid this you can set two environment variables the *sqlcli* will default to:
 
 ```bash
-export DATABASE_URL="sqlite:///demo_database.db"
+export DATABASE_URL="sqlite:///sqlcli_demo/database.db"
 export MODELS_PATH="tests/models/sports.py
 ```
 

@@ -56,18 +56,26 @@ def main(
 
 @app.command()
 def init_demo(
-    path: str = typer.Option(".", help="The path to save the demo database"),
+    path: str = typer.Option(".", help="The path to save the demo database."),
     clear: bool = typer.Option(
         False,
-        help="Remove all of the demo database related data including `demo_models.py` and `demo_database.db`.",
+        help="Remove all of the demo database related data including `sqlcli_demo/models.py` and `sqlcli_demo/database.db`.",
     ),
 ):
     """Create a demo database for exploring sqlcli.
 
-    Create a demo sqlite database to test with sqlcli.
+    Create a demo sqlite database to test with sqlcli. Calling this command
+    will create two new files:
+    
+    1. `./sqlcli_demo/database.db`: a sqlite data populated with a small amount of data.
+    2. `./sqlcli_demo/models.py `: a python module with SQLModel classes.
+    
+    These files can used to test sqlcli without connecting to your own database.
+    Once you are done with the demo files they can be deleted by calling
+    `sqlcli init-demo --clear`.
     """
-    db_filename = "demo_database.db"
-    models_filename = "demo_models.py"
+    db_filename = "sqlcli_demo/database.db"
+    models_filename = "sqlcli_demo/models.py"
 
     if clear:
         if os.path.isfile(db_filename) and os.path.isfile(models_filename):
@@ -108,7 +116,7 @@ def init_demo(
     # Create a model.py for the user to use with the demo.
     console.print("[red bold]Creating models module")
     model_text = pkgutil.get_data(__name__, "_demo/models.py").decode("utf-8")
-    with open("./demo_models.py", "w") as f:
+    with open("./sqlcli_demo/models.py", "w") as f:
         f.write(model_text)
 
     # How to use the demo database.
@@ -130,8 +138,8 @@ def init_demo(
     console.print(
         "[info]To avoid passing in the `-d` and -`m` option everytime you can set the following environment variables:\n"
     )
-    console.print('export DATABASE_URL="sqlite:///demo_database.db"')
-    console.print('export MODELS_PATH="demo_models.py"\n')
+    console.print('export DATABASE_URL="sqlite:///sqlcli_demo/database.db"')
+    console.print('export MODELS_PATH="sqlcli_demo/models.py"\n')
 
     docs_url = "https://samedwardes.github.io/sqlcli/tutorial/using-demo-db/"
     text = f"[info]For instructions on how to use the demo database visit {docs_url}."
@@ -163,7 +171,7 @@ def select_sqlcli(
     """Query the database.
 
     Query the database to see the data inside a given table. Calling `sqlcli
-    select` is similar to calling `SELECT * FROM [table]`.
+    select` is similar to calling `SELECT * FROM [table]` in sql.
     """
     models, url, engine, tables = sqlmodel_setup(models_path, database_url)
     obj, table_name = validate_table_name(table_name, tables)
@@ -211,7 +219,11 @@ def insert(
         None, "--models-path", "-m", help=models_path_help
     ),
 ):
-    """Insert a new record into the database."""
+    """Insert a new record into the database.
+    
+    Insert new rows into the database. Calling `sqlcli insert` is similar to 
+    calling `INSERT INTO [table]` in sql.
+    """
     models, url, engine, tables = sqlmodel_setup(models_path, database_url)
     obj, table_name = validate_table_name(table_name, tables)
 
@@ -340,7 +352,7 @@ def inspect_sqlcli(
         None, "--models-path", "-m", help=models_path_help
     ),
 ):
-    """Inspect a SQLModel with rich.inspect."""
+    """Inspect a SQLModel with `rich.inspect`."""
     models, url, engine, tables = sqlmodel_setup(models_path, database_url)
     obj, table_name = validate_table_name(table_name, tables)
     inspect(obj)
@@ -348,7 +360,11 @@ def inspect_sqlcli(
 
 @app.command()
 def docs():
-    """Open the docs: https://samedwardes.github.io/sqlcli/"""
+    """Opens the docs. 
+    
+    Open the docs using you default browser
+    [https://samedwardes.github.io/sqlcli/](https://samedwardes.github.io/sqlcli/).
+    """
     url = "https://samedwardes.github.io/sqlcli/"
     console.print(f"[info]Opening the docs: {url}")
     typer.launch(url)

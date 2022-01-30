@@ -11,18 +11,18 @@ $ sqlcli [OPTIONS] COMMAND [ARGS]...
 **Options**:
 
 * `--version`: Show the installed version.  [default: False]
-* `--install-completion`: Install completion for the current shell.
-* `--show-completion`: Show completion for the current shell, to copy it or customize the installation.
+* `--install-completion [bash|zsh|fish|powershell|pwsh]`: Install completion for the specified shell.
+* `--show-completion [bash|zsh|fish|powershell|pwsh]`: Show completion for the specified shell, to copy it or customize the installation.
 * `--help`: Show this message and exit.
 
 **Commands**:
 
 * `create-all`: Create a database.
-* `docs`: Open the docs:...
+* `docs`: Opens the docs.
 * `drop-all`: Drop a database.
 * `init-demo`: Create a demo database for exploring sqlcli.
 * `insert`: Insert a new record into the database.
-* `inspect`: Inspect a SQLModel with rich.inspect.
+* `inspect`: Inspect a SQLModel with `rich.inspect`.
 * `select`: Query the database.
 
 ## `sqlcli create-all`
@@ -44,7 +44,10 @@ $ sqlcli create-all [OPTIONS]
 
 ## `sqlcli docs`
 
-Open the docs: https://samedwardes.github.io/sqlcli/
+Opens the docs. 
+
+Open the docs using you default browser
+[https://samedwardes.github.io/sqlcli/](https://samedwardes.github.io/sqlcli/).
 
 **Usage**:
 
@@ -78,7 +81,15 @@ $ sqlcli drop-all [OPTIONS]
 
 Create a demo database for exploring sqlcli.
 
-Create a demo sqlite database to test with sqlcli.
+Create a demo sqlite database to test with sqlcli. Calling this command
+will create two new files:
+
+1. `./sqlcli_demo/database.db`: a sqlite data populated with a small amount of data.
+2. `./sqlcli_demo/models.py `: a python module with SQLModel classes.
+
+These files can used to test sqlcli without connecting to your own database.
+Once you are done with the demo files they can be deleted by calling
+`sqlcli init-demo --clear`.
 
 **Usage**:
 
@@ -88,13 +99,16 @@ $ sqlcli init-demo [OPTIONS]
 
 **Options**:
 
-* `--path TEXT`: The path to save the demo database  [default: .]
-* `--clear / --no-clear`: Remove all of the demo database related data including `demo_models.py` and `demo_database.db`.  [default: False]
+* `--path TEXT`: The path to save the demo database.  [default: .]
+* `--clear / --no-clear`: Remove all of the demo database related data including `sqlcli_demo/models.py` and `sqlcli_demo/database.db`.  [default: False]
 * `--help`: Show this message and exit.
 
 ## `sqlcli insert`
 
 Insert a new record into the database.
+
+Insert new rows into the database. Calling `sqlcli insert` is similar to 
+calling `INSERT INTO [table]` in sql..
 
 **Usage**:
 
@@ -104,7 +118,7 @@ $ sqlcli insert [OPTIONS] [TABLE_NAME]
 
 **Arguments**:
 
-* `[TABLE_NAME]`: The name of the table to query.
+* `[TABLE_NAME]`: The name of the table to query. If no name is provided the interactive promptwill ask for a table name.
 
 **Options**:
 
@@ -114,7 +128,7 @@ $ sqlcli insert [OPTIONS] [TABLE_NAME]
 
 ## `sqlcli inspect`
 
-Inspect a SQLModel with rich.inspect.
+Inspect a SQLModel with `rich.inspect`.
 
 **Usage**:
 
@@ -124,7 +138,7 @@ $ sqlcli inspect [OPTIONS] [TABLE_NAME]
 
 **Arguments**:
 
-* `[TABLE_NAME]`: The name of the table to query.
+* `[TABLE_NAME]`: The name of the table to query. If no name is provided the interactive promptwill ask for a table name.
 
 **Options**:
 
@@ -137,7 +151,7 @@ $ sqlcli inspect [OPTIONS] [TABLE_NAME]
 Query the database.
 
 Query the database to see the data inside a given table. Calling `sqlcli
-select` is similar to calling `SELECT * FROM [table]`.
+select` is similar to calling `SELECT * FROM [table]` in sql.
 
 **Usage**:
 
@@ -147,7 +161,7 @@ $ sqlcli select [OPTIONS] [TABLE_NAME]
 
 **Arguments**:
 
-* `[TABLE_NAME]`: The name of the table to query.
+* `[TABLE_NAME]`: The name of the table to query. If no name is provided the interactive promptwill ask for a table name.
 
 **Options**:
 
