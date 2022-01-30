@@ -378,6 +378,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#pull-request-check-list" class="md-nav__link">
+    Pull request check list
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#docs" class="md-nav__link">
     Docs
   </a>
@@ -468,6 +475,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#pull-request-check-list" class="md-nav__link">
+    Pull request check list
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#docs" class="md-nav__link">
     Docs
   </a>
@@ -522,6 +536,15 @@
                 
 
 <h1 id="contributing">Contributing</h1>
+<p><em>sqlcli</em> welcomes all contributors. If you would like to make a contribution please create a fork of the repository and then submit a pull request.</p>
+<h2 id="pull-request-check-list">Pull request check list</h2>
+<p>When creating a pull request please ensure you have completed the following:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox"/><span class="task-list-indicator"></span></label> Run the black code formatter (<code>black sqlcli</code>).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox"/><span class="task-list-indicator"></span></label> Run pytest (<code>pytest --forked</code>).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox"/><span class="task-list-indicator"></span></label> Re-build the docs api reference (<code>python scripts/docs.py build-typer-docs</code>).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox"/><span class="task-list-indicator"></span></label> Preview the docs (<code>mkdocs serve</code>)</li>
+</ul>
 <h2 id="docs">Docs</h2>
 <p>The docs are hosted on GitHub pages at: <a href="https://samedwardes.github.io/sqlcli/">https://samedwardes.github.io/sqlcli/</a>. When making changes remember to do the following:</p>
 <ul class="task-list">
@@ -547,11 +570,11 @@
 <h3 id="open-source-libraries">Open source libraries</h3>
 <p>Like all great open source software <em>sqlcli</em> is built on the shoulders of giants. <em>sqlcli</em> relies heavily on:</p>
 <ul>
-<li>sqlmodel</li>
-<li>sqlalchemy</li>
-<li>typer</li>
-<li>rich</li>
-<li>mkdocs-material</li>
+<li><a href="https://github.com/tiangolo/sqlmodel">sqlmodel</a></li>
+<li><a href="https://www.sqlalchemy.org/">sqlalchemy</a></li>
+<li><a href="https://github.com/tiangolo/typer">typer</a></li>
+<li><a href="https://github.com/Textualize/rich">rich</a></li>
+<li><a href="https://squidfunk.github.io/mkdocs-material/">mkdocs-material</a></li>
 <li>and many more!</li>
 </ul>
 <p>See the <a href="https://github.com/SamEdwardes/sqlcli/blob/main/pyproject.toml">pyproject.toml</a> for all requirements.</p>

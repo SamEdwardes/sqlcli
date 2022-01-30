@@ -547,18 +547,18 @@
 <p><strong>Options</strong>:</p>
 <ul>
 <li><code>--version</code>: Show the installed version.  [default: False]</li>
-<li><code>--install-completion</code>: Install completion for the current shell.</li>
-<li><code>--show-completion</code>: Show completion for the current shell, to copy it or customize the installation.</li>
+<li><code>--install-completion [bash|zsh|fish|powershell|pwsh]</code>: Install completion for the specified shell.</li>
+<li><code>--show-completion [bash|zsh|fish|powershell|pwsh]</code>: Show completion for the specified shell, to copy it or customize the installation.</li>
 <li><code>--help</code>: Show this message and exit.</li>
 </ul>
 <p><strong>Commands</strong>:</p>
 <ul>
 <li><code>create-all</code>: Create a database.</li>
-<li><code>docs</code>: Open the docs:...</li>
+<li><code>docs</code>: Opens the docs.</li>
 <li><code>drop-all</code>: Drop a database.</li>
 <li><code>init-demo</code>: Create a demo database for exploring sqlcli.</li>
 <li><code>insert</code>: Insert a new record into the database.</li>
-<li><code>inspect</code>: Inspect a SQLModel with rich.inspect.</li>
+<li><code>inspect</code>: Inspect a SQLModel with <code>rich.inspect</code>.</li>
 <li><code>select</code>: Query the database.</li>
 </ul>
 <h2 id="sqlcli-create-all"><code>sqlcli create-all</code></h2>
@@ -574,7 +574,9 @@
 <li><code>--help</code>: Show this message and exit.</li>
 </ul>
 <h2 id="sqlcli-docs"><code>sqlcli docs</code></h2>
-<p>Open the docs: https://samedwardes.github.io/sqlcli/</p>
+<p>Opens the docs. </p>
+<p>Open the docs using you default browser
+<a href="https://samedwardes.github.io/sqlcli/">https://samedwardes.github.io/sqlcli/</a>.</p>
 <p><strong>Usage</strong>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="gp">$ </span>sqlcli docs <span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
@@ -597,24 +599,34 @@
 </ul>
 <h2 id="sqlcli-init-demo"><code>sqlcli init-demo</code></h2>
 <p>Create a demo database for exploring sqlcli.</p>
-<p>Create a demo sqlite database to test with sqlcli.</p>
+<p>Create a demo sqlite database to test with sqlcli. Calling this command
+will create two new files:</p>
+<ol>
+<li><code>./demo_database.db</code>: a sqlite data populated with a small amount of data.</li>
+<li><code>./demo_models.py</code>: a python module with SQLModel classes.</li>
+</ol>
+<p>These files can used to test sqlcli without connecting to your own database.
+Once you are done with the demo files they can be deleted by calling
+<code>sqlcli init-demo --clear</code>.</p>
 <p><strong>Usage</strong>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="gp">$ </span>sqlcli init-demo <span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <p><strong>Options</strong>:</p>
 <ul>
-<li><code>--path TEXT</code>: The path to save the demo database  [default: .]</li>
+<li><code>--path TEXT</code>: The path to save the demo database.  [default: .]</li>
 <li><code>--clear / --no-clear</code>: Remove all of the demo database related data including <code>demo_models.py</code> and <code>demo_database.db</code>.  [default: False]</li>
 <li><code>--help</code>: Show this message and exit.</li>
 </ul>
 <h2 id="sqlcli-insert"><code>sqlcli insert</code></h2>
 <p>Insert a new record into the database.</p>
+<p>Insert new rows into the database. Calling <code>sqlcli insert</code> is similar to 
+calling <code>INSERT INTO [table]</code> in sql..</p>
 <p><strong>Usage</strong>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="gp">$ </span>sqlcli insert <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>TABLE_NAME<span class="o">]</span>
 </code></pre></div>
 <p><strong>Arguments</strong>:</p>
 <ul>
-<li><code>[TABLE_NAME]</code>: The name of the table to query.</li>
+<li><code>[TABLE_NAME]</code>: The name of the table to query. If no name is provided the interactive promptwill ask for a table name.</li>
 </ul>
 <p><strong>Options</strong>:</p>
 <ul>
@@ -623,13 +635,13 @@
 <li><code>--help</code>: Show this message and exit.</li>
 </ul>
 <h2 id="sqlcli-inspect"><code>sqlcli inspect</code></h2>
-<p>Inspect a SQLModel with rich.inspect.</p>
+<p>Inspect a SQLModel with <code>rich.inspect</code>.</p>
 <p><strong>Usage</strong>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="gp">$ </span>sqlcli inspect <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>TABLE_NAME<span class="o">]</span>
 </code></pre></div>
 <p><strong>Arguments</strong>:</p>
 <ul>
-<li><code>[TABLE_NAME]</code>: The name of the table to query.</li>
+<li><code>[TABLE_NAME]</code>: The name of the table to query. If no name is provided the interactive promptwill ask for a table name.</li>
 </ul>
 <p><strong>Options</strong>:</p>
 <ul>
@@ -640,13 +652,13 @@
 <h2 id="sqlcli-select"><code>sqlcli select</code></h2>
 <p>Query the database.</p>
 <p>Query the database to see the data inside a given table. Calling <code>sqlcli
-select</code> is similar to calling <code>SELECT * FROM [table]</code>.</p>
+select</code> is similar to calling <code>SELECT * FROM [table]</code> in sql.</p>
 <p><strong>Usage</strong>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="gp">$ </span>sqlcli <span class="k">select</span> <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>TABLE_NAME<span class="o">]</span>
 </code></pre></div>
 <p><strong>Arguments</strong>:</p>
 <ul>
-<li><code>[TABLE_NAME]</code>: The name of the table to query.</li>
+<li><code>[TABLE_NAME]</code>: The name of the table to query. If no name is provided the interactive promptwill ask for a table name.</li>
 </ul>
 <p><strong>Options</strong>:</p>
 <ul>

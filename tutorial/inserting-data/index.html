@@ -333,9 +333,54 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Writing data with `insert`
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Writing data with `insert`
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#set-up-the-demo-database" class="md-nav__link">
+    Set up the demo database
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-new-record" class="md-nav__link">
+    Create a new record
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interactive-prompt" class="md-nav__link">
+    Interactive prompt
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -398,6 +443,35 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#set-up-the-demo-database" class="md-nav__link">
+    Set up the demo database
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-new-record" class="md-nav__link">
+    Create a new record
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interactive-prompt" class="md-nav__link">
+    Interactive prompt
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -410,6 +484,97 @@
                 
 
 <h1 id="writing-data-with-insert">Writing data with <code>insert</code></h1>
+<p>With <em>sqlcli</em> you can insert data into your database using the command line.. The <code>sqlcli insert</code> command helps you interactively create a new record.. It is similar to the <code>INSERT INTO</code> statement in SQL.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># using sqlcli</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sqlcli insert &lt;TABLE&gt;
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- using sql</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="o">&lt;</span><span class="k">TABLE</span><span class="o">&gt;</span><span class="w"></span>
+</code></pre></div>
+<h2 id="set-up-the-demo-database">Set up the demo database</h2>
+<p>To get started, first make sure you have set up the demo database.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sqlcli init-demo
+</code></pre></div>
+<p>To avoid having to specify the database and models with each command lets set our two optional environment variables:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">export</span> <span class="nv">DATABASE_URL</span><span class="o">=</span><span class="s2">&quot;sqlite:///demo_database.db&quot;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">export</span> <span class="nv">MODELS_PATH</span><span class="o">=</span><span class="s2">&quot;demo_models.py&quot;</span>
+</code></pre></div>
+<p>Now you are ready to select data from the demo database 🙌</p>
+<h2 id="create-a-new-record">Create a new record</h2>
+<p>Creating a new record is as simple as calling:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sqlcli insert
+</code></pre></div>
+<div class="termy">
+
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="gp">$ </span>sqlcli insert
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="gp"># </span>Please <span class="k">select</span> a table <span class="o">[</span>sport/athlete<span class="o">]</span>:$ athlete
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="go">───────────────────────── column: `id` ──────────────────────────</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="gp"># </span>&lt;class <span class="s1">&#39;int&#39;</span>&gt; <span class="o">(</span>optional<span class="o">)</span>:$ 
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="go">──────────────────────── column: `name` ─────────────────────────</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="gp"># </span>&lt;class <span class="s1">&#39;str&#39;</span>&gt;:$ Carter 
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="go">────────────────────── column: `sport_id` ───────────────────────</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="go">The column `sport_id` is a foreign key related to the `sport` table. Please select from one of the </span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="go">options below from the `id` column:</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="go">     sport     </span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="go">┏━━━━━━━━┳━━━━┓</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="go">┃ name   ┃ id ┃</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="go">┡━━━━━━━━╇━━━━┩</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="go">│ Soccer │ 1  │</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="go">│ Hockey │ 2  │</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="go">└────────┴────┘</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="gp"># </span>&lt;class <span class="s1">&#39;int&#39;</span>&gt; <span class="o">(</span>optional<span class="o">)</span> <span class="o">[</span><span class="m">1</span>/2<span class="o">]</span>:$ <span class="m">1</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="go">╭──────────────── New row successfully added 🎉 ────────────────╮</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="go">│ {&#39;id&#39;: 9, &#39;sport_id&#39;: 1, &#39;name&#39;: &#39;Carter&#39;}                    │</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="go">╰───────────────────────────────────────────────────────────────╯</span>
+</code></pre></div>
+
+</div>
+
+<p>Alternatively, if you knew which table you wanted to insert a record into you could have also called:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sqlcli insert athlete
+</code></pre></div>
+<h2 id="interactive-prompt">Interactive prompt</h2>
+<p>One of the main features of <em>sqlcli</em> is the interactive prompt. <em>sqlcli</em> uses the information from your <em>sqlmodel</em> classes to generate a smart and interactive prompt. When inserting new data into the database <em>sqlcli</em> knows:</p>
+<ul>
+<li>What is the correct <strong>type</strong>. For example an integer is required, but a string is input by the user <em>sqlcli</em> will re-prompt you</li>
+<li>The <strong>relationships</strong> between tables. When a value is a foreign key to another table <em>sqlcli</em> will show you a preview of that table and only allow you to input valid options.</li>
+</ul>
+<p>In the example below the user tries to enter an invalid input:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sqlcli insert athlete
+</code></pre></div>
+<div class="termy">
+
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="gp">$ </span>sqlcli insert
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="gp"># </span>Please <span class="k">select</span> a table <span class="o">[</span>sport/athlete<span class="o">]</span>:$ athlete
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="go">───────────────────────── column: `id` ──────────────────────────</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="gp"># </span>&lt;class <span class="s1">&#39;int&#39;</span>&gt; <span class="o">(</span>optional<span class="o">)</span>:$ 
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="go">──────────────────────── column: `name` ─────────────────────────</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="gp"># </span>&lt;class <span class="s1">&#39;str&#39;</span>&gt;:$ Carter 
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="go">────────────────────── column: `sport_id` ───────────────────────</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="go">The column `sport_id` is a foreign key related to the `sport` table. Please select from one of the </span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="go">options below from the `id` column:</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="go">     sport     </span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="go">┏━━━━━━━━┳━━━━┓</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="go">┃ name   ┃ id ┃</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="go">┡━━━━━━━━╇━━━━┩</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="go">│ Soccer │ 1  │</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="go">│ Hockey │ 2  │</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="go">└────────┴────┘</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="gp"># </span>&lt;class <span class="s1">&#39;int&#39;</span>&gt; <span class="o">(</span>optional<span class="o">)</span> <span class="o">[</span><span class="m">1</span>/2<span class="o">]</span>:$ <span class="m">50</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="go">Please select one of the available options</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="gp"># </span>&lt;class <span class="s1">&#39;int&#39;</span>&gt; <span class="o">(</span>optional<span class="o">)</span> <span class="o">[</span><span class="m">1</span>/2<span class="o">]</span>:$ Soccer
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="go">Please select one of the available options</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="gp"># </span>&lt;class <span class="s1">&#39;int&#39;</span>&gt; <span class="o">(</span>optional<span class="o">)</span> <span class="o">[</span><span class="m">1</span>/2<span class="o">]</span>:$ <span class="m">1</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="go">╭──────────────── New row successfully added 🎉 ────────────────╮</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="go">│ {&#39;id&#39;: 9, &#39;sport_id&#39;: 1, &#39;name&#39;: &#39;Carter&#39;}                    │</span>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="go">╰───────────────────────────────────────────────────────────────╯</span>
+</code></pre></div>
+
+</div>
 
               
             </article>
