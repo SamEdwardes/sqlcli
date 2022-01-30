@@ -32,7 +32,7 @@ def get_tables(models_module) -> Dict[str, SQLModel]:
     tables = {}
     for name, obj in models_module.__dict__.items():
         if isinstance(obj, type(SQLModel)) and name != "SQLModel":
-            tables[name.lower()] = obj
+            tables[obj.__tablename__] = obj
     return tables
 
 
