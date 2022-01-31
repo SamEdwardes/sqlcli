@@ -1,6 +1,7 @@
 import json
 import os
 import pkgutil
+import shutil
 import warnings
 from textwrap import dedent
 from typing import Optional
@@ -56,7 +57,7 @@ def main(
 
 @app.command()
 def init_demo(
-    path: str = typer.Option(".", help="The path to save the demo database."),
+    path: str = typer.Option("sqlcli_demo", help="The path to save the demo database."),
     clear: bool = typer.Option(
         False,
         help="Remove all of the demo database related data including `sqlcli_demo/models.py` and `sqlcli_demo/database.db`.",
@@ -74,28 +75,28 @@ def init_demo(
     Once you are done with the demo files they can be deleted by calling
     `sqlcli init-demo --clear`.
     """
-    db_filename = "sqlcli_demo/database.db"
-    models_filename = "sqlcli_demo/models.py"
+    db_filename = "database.db"
+    models_filename = "models.py"
 
     if clear:
-        if os.path.isfile(db_filename) and os.path.isfile(models_filename):
-            os.remove(db_filename)
-            os.remove(models_filename)
-            console.print(
-                f"[info]Removed files: `{db_filename}` and `{models_filename}`"
-            )
+        if os.path.isdir(path):
+            shutil.rmtree(path)
+            console.print(f"[info] Removed directory: `{path}`")
         else:
-            console.print(
-                f"[info]Files NOT found: `{db_filename}` and `{models_filename}`"
-            )
+            console.print(f"[info]Directory NOT found: `{path}`")
         raise typer.Exit()
 
     from ._demo.data import create_demo_data
     from ._demo.models import Athlete, Sport
+    
+    # Create directory to store files.
+    if os.path.isdir(path) == False:
+        os.mkdir(path)
 
     # Create a sqlite database.
     db_path = os.path.join(path, db_filename)
     sqlite_url = f"sqlite:///{db_path}"
+    console.log(sqlite_url)
     engine = create_engine(sqlite_url)
     SQLModel.metadata.drop_all(engine)
     SQLModel.metadata.create_all(engine)
