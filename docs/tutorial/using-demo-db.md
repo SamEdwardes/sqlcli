@@ -25,9 +25,9 @@ sqlcli init-demo
 This will create a new sqlite database on your computer and the related SQLModel classes that you can then use to test *sqlcli*. The command will output two new files in your working directory:
 
 ```bash
-.
-├── sqlcli_demo/database.db # A sqlite database with demo data.
-└── sqlcli_demo/models.py   # SQLModel classes that map to the demo database.
+sqlcli_demo
+├── database.db # A sqlite database with demo data.
+└── models.py   # SQLModel classes that map to the demo database.
 ```
 
 With these two files you have everything you need to start working with *sqlcli* 🎉. The demo models are defined as follows:
@@ -145,7 +145,7 @@ It can be annoying to specify the database URL and SQLModel modules every time. 
 
 ```bash
 export DATABASE_URL="sqlite:///sqlcli_demo/database.db"
-export MODELS_PATH="tests/models/sports.py
+export MODELS_PATH="sqlcli_demo/models.py"
 ```
 
 Now you can call the same commands but without specifying the `-d` and `-m` options:

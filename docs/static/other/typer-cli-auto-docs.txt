@@ -99,7 +99,7 @@ $ sqlcli init-demo [OPTIONS]
 
 **Options**:
 
-* `--path TEXT`: The path to save the demo database.  [default: .]
+* `--path TEXT`: The path to save the demo database.  [default: sqlcli_demo]
 * `--clear / --no-clear`: Remove all of the demo database related data including `sqlcli_demo/models.py` and `sqlcli_demo/database.db`.  [default: False]
 * `--help`: Show this message and exit.
 
@@ -108,7 +108,7 @@ $ sqlcli init-demo [OPTIONS]
 Insert a new record into the database.
 
 Insert new rows into the database. Calling `sqlcli insert` is similar to 
-calling `INSERT INTO [table]` in sql..
+calling `INSERT INTO [table]` in sql.
 
 **Usage**:
 
