@@ -1,6 +1,9 @@
 # sqlcli
-demo_database.db
+sqlcli_demo/database.db
+sqlcli_demo/models.py
+database.db
 settings.json
+tmp.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -131,3 +134,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.vscode/launch.json

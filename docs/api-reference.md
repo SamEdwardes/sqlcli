@@ -1,5 +1,6 @@
 # API Reference
 
 {%
-   include-markdown "api-docs.md"
+   include-markdown "static/other/typer-cli-auto-docs.txt"
+   start="# `sqlcli`"
 %}
