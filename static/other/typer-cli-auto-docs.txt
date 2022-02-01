@@ -84,8 +84,8 @@ Create a demo database for exploring sqlcli.
 Create a demo sqlite database to test with sqlcli. Calling this command
 will create two new files:
 
-1. `./demo_database.db`: a sqlite data populated with a small amount of data.
-2. `./demo_models.py `: a python module with SQLModel classes.
+1. `./sqlcli_demo/database.db`: a sqlite data populated with a small amount of data.
+2. `./sqlcli_demo/models.py `: a python module with SQLModel classes.
 
 These files can used to test sqlcli without connecting to your own database.
 Once you are done with the demo files they can be deleted by calling
@@ -99,8 +99,8 @@ $ sqlcli init-demo [OPTIONS]
 
 **Options**:
 
-* `--path TEXT`: The path to save the demo database.  [default: .]
-* `--clear / --no-clear`: Remove all of the demo database related data including `demo_models.py` and `demo_database.db`.  [default: False]
+* `--path TEXT`: The path to save the demo database.  [default: sqlcli_demo]
+* `--clear / --no-clear`: Remove all of the demo database related data including `sqlcli_demo/models.py` and `sqlcli_demo/database.db`.  [default: False]
 * `--help`: Show this message and exit.
 
 ## `sqlcli insert`
@@ -108,7 +108,7 @@ $ sqlcli init-demo [OPTIONS]
 Insert a new record into the database.
 
 Insert new rows into the database. Calling `sqlcli insert` is similar to 
-calling `INSERT INTO [table]` in sql..
+calling `INSERT INTO [table]` in sql.
 
 **Usage**:
 

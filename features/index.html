@@ -525,21 +525,21 @@
 <a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="go">└────┴──────────┴──────────┘</span>
 <a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="go">───────────────── how to use the demo database ──────────────────</span>
 <a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="go">A demo database has been created at:</span>
-<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="go">/Users/samedwardes/git/sqlcli/demo_database.db</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="go">/Users/samedwardes/git/sqlcli/sqlcli_demo/database.db</span>
 <a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>
 <a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="go">Demo models have been saved to:</span>
-<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="go">/Users/samedwardes/git/sqlcli/demo_models.py</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="go">/Users/samedwardes/git/sqlcli/sqlcli_demo/models.py</span>
 <a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>
 <a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="go">Here are some example commands to get you started:</span>
 <a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>
-<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="go">sqlcli select athlete -d &quot;sqlite:///demo_database.db&quot; -m demo_models.py</span>
-<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="go">sqlcli insert -d &quot;sqlite:///demo_database.db&quot; -m demo_models.py</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="go">sqlcli select athlete -d &quot;sqlite:///sqlcli_demo/database.db&quot; -m sqlcli_demo/models.py</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="go">sqlcli insert -d &quot;sqlite:///sqlcli_demo/database.db&quot; -m sqlcli_demo/models.py</span>
 <a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>
 <a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="go">To avoid passing in the `-d` and -`m` option everytime you can set the following environment </span>
 <a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="go">variables:</span>
 <a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>
-<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="go">export DATABASE_URL=&quot;sqlite:///demo_database.db&quot;</span>
-<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="go">export MODELS_PATH=&quot;demo_models.py&quot;</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="go">export DATABASE_URL=&quot;sqlite:///sqlcli_demo/database.db&quot;</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="go">export MODELS_PATH=&quot;sqlcli_demo/models.py&quot;</span>
 <a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>
 <a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="go">For instructions on how to use the demo database visit </span>
 <a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a><span class="go">https://samedwardes.github.io/sqlcli/tutorial/using-demo-db/.</span>
@@ -549,11 +549,11 @@
 
 <h2 id="select">Select</h2>
 <p>Select data from your SQL database using the <code>select</code> command:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sqlcli <span class="k">select</span> athlete -d <span class="s2">&quot;sqlite:///demo_database.db&quot;</span> -m <span class="s2">&quot;demo_models.py&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sqlcli <span class="k">select</span> athlete -d <span class="s2">&quot;sqlite:///sqlcli_demo/database.db&quot;</span> -m <span class="s2">&quot;sqlcli_demo/models.py&quot;</span>
 </code></pre></div>
 <div class="termy">
 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="gp">$ </span>sqlcli <span class="k">select</span> athlete -d <span class="s2">&quot;sqlite:///demo_database.db&quot;</span> -m <span class="s2">&quot;demo_models.py&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="gp">$ </span>sqlcli <span class="k">select</span> athlete -d <span class="s2">&quot;sqlite:///sqlcli_demo/database.db&quot;</span> -m <span class="s2">&quot;sqlcli_demo/models.py&quot;</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="go">┏━━━━┳━━━━━━━━━━┳━━━━━━━━━━┓</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="go">┃ id ┃ sport_id ┃ name     ┃</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="go">┡━━━━╇━━━━━━━━━━╇━━━━━━━━━━┩</span>
@@ -572,11 +572,11 @@
 
 <h2 id="insert">Insert</h2>
 <p>Interactively insert new data using the <code>insert</code> command:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sqlcli insert athlete -d <span class="s2">&quot;sqlite:///demo_database.db&quot;</span> -m <span class="s2">&quot;demo_models.py&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sqlcli insert athlete -d <span class="s2">&quot;sqlite:///sqlcli_demo/database.db&quot;</span> -m <span class="s2">&quot;sqlcli_demo/models.py&quot;</span>
 </code></pre></div>
 <div class="termy">
 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="gp">$ </span>sqlcli insert athlete -d <span class="s2">&quot;sqlite:///demo_database.db&quot;</span> -m <span class="s2">&quot;demo_models.py&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="gp">$ </span>sqlcli insert athlete -d <span class="s2">&quot;sqlite:///sqlcli_demo/database.db&quot;</span> -m <span class="s2">&quot;sqlcli_demo/models.py&quot;</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="go">───────────────────────── column: `id` ──────────────────────────</span>
 <a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="gp"># </span>&lt;class <span class="s1">&#39;int&#39;</span>&gt; <span class="o">(</span>optional<span class="o">)</span>:$ 
@@ -602,8 +602,8 @@
 
 <h2 id="set-defaults">Set defaults</h2>
 <p>Type less by setting a default database url and models module:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">export</span> <span class="nv">DATABASE_URL</span><span class="o">=</span><span class="s2">&quot;sqlite:///demo_database.db&quot;</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">export</span> <span class="nv">MODELS_PATH</span><span class="o">=</span><span class="s2">&quot;demo_models.py&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">export</span> <span class="nv">DATABASE_URL</span><span class="o">=</span><span class="s2">&quot;sqlite:///sqlcli_demo/database.db&quot;</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">export</span> <span class="nv">MODELS_PATH</span><span class="o">=</span><span class="s2">&quot;sqlcli_demo/models.py&quot;</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sqlcli <span class="k">select</span> athlete
 </code></pre></div>
